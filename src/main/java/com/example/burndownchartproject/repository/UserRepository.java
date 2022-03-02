@@ -1,4 +1,4 @@
 package com.example.burndownchartproject.repository;
 
-public class sfgs {
+public class UserRepository {
 }
