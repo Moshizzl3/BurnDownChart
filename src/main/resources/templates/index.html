@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<table>
+    <tr></tr>
+</table>
+
+<div class="outerdiv">
+
+    <table>
+        <thead>
+        <tr>
+            <th colspan="4">Overview</th>
+        </tr>
+        </thead>
+        <th>not started</th>
+        <th>in progress</th>
+        <th>review</th>
+        <th>done</th>
+        <tbody>
+        <tr>
+            <td id="notstarted" class="notstarted">
+                <div class="colscrollbar" id="divnotstarted">
+                </div>
+            </td>
+            <td id="inprogress" class="inprogress">
+                <div class="colscrollbar" id="divinprogress">
+                </div>
+            </td>
+            <td id="review" class="review">
+                <div class="colscrollbar" id="divreview">
+                </div>
+            </td>
+            <td id="done" class="done">
+                <div class="colscrollbar" id="divdone">
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="p-modal-name">Some text in the Modal..</p>
+        <p id="p-modal-date">Some text in the Modal..</p>
+        <p id="p-modal-status">Some text in the Modal..</p>
+
+        <span>
+                <select id="dropDownModal">
+                    <option>in progress</option>
+                    <option>review</option>
+                    <option>done</option>
+                    <option>not started</option>
+
+                </select>
+                <button id="setStatus">set status</button>
+            </span>
+        <button id="delete">delete</button>
+    </div>
+
+</div>
+
+<script src="js/js.js"></script>
+</body>
+
+</html>
