@@ -28,7 +28,7 @@
         <th>review</th>
         <th>done</th>
         <tbody>
-        <tr>
+        <tr class="rows">
             <td id="notstarted" class="notstarted">
                 <div class="colscrollbar" id="divnotstarted">
                 </div>
@@ -61,16 +61,16 @@
         <p id="p-modal-name">Some text in the Modal..</p>
         <p id="p-modal-date">Some text in the Modal..</p>
         <p id="p-modal-status">Some text in the Modal..</p>
-
+        <p id="p-modal-id" hidden>Some text in the Modal..</p>
         <span>
                 <select id="dropDownModal">
-                    <option>in progress</option>
-                    <option>review</option>
-                    <option>done</option>
-                    <option>not started</option>
+                    <option value="inprogress">inprogress</option>
+                    <option value="review">review</option>
+                    <option value="done">done</option>
+                    <option value="notstarted">notstarted</option>
 
                 </select>
-                <button id="setStatus">set status</button>
+                <button id="setstatus">set status</button>
             </span>
         <button id="delete">delete</button>
     </div>
