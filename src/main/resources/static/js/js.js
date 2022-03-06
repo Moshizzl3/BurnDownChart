@@ -22,7 +22,32 @@ async function fillTaskArray() {
     })
 }
 
+async function updateStatusTask(task) {
+    const urlUpdate = 'task/' + task.taskId;
 
+    const fetchOption = {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: ""
+    }
+
+    const jsonString = JSON.stringify(task);
+    fetchOption.body = jsonString;
+
+    //call backend and wait for response
+    const response = await fetch(urlUpdate, fetchOption);
+    if (!response.ok) {
+        console.log("shiiit, gik sq ikk")
+    }
+    return response;
+}
+
+async function updateRow(task, input) {
+    task.status = input;
+    await updateStatusTask(task);
+}
 
 
 function fillTaskToBoard(section, task) {
@@ -64,10 +89,10 @@ function fillTaskToBoard(section, task) {
         pId.textContent = task.taskId;
     })
 }
+
 fillTaskArray().then(loadTasks);
 
 function loadTasks() {
-    console.log(taskArray)
     taskArray.forEach(task1 => {
         let test = task1.taskId;
         if ("notstarted" == task1.status)
@@ -89,13 +114,12 @@ function loadTasks() {
 }
 
 
-
-
 function changeStatusOnTask() {
 
     let getTaskId = document.getElementById('p-modal-id').textContent;
-    console.log(getTaskId)
-    taskArray[getTaskId-1].status = document.getElementById("dropDownModal").value;
+    let getTask = taskArray.find(task => task.taskId == getTaskId);
+    console.log(getTask)
+    let taskStatus = document.getElementById("dropDownModal").value;
     console.log(document.getElementById("dropDownModal").value)
 
     let clearNotStarted = document.getElementById('divnotstarted');
@@ -109,8 +133,9 @@ function changeStatusOnTask() {
 
     let clearDone = document.getElementById('divdone');
     clearDone.innerHTML = '';
-    loadTasks();
-    console.log(taskArray)
+
+    updateRow(getTask,taskStatus).then(loadTasks);
+
     modalTask.style.display = "none";
 }
 

@@ -28,7 +28,7 @@ public class InitDate implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Set<Task> taskSet = new HashSet<>();
+/*        Set<Task> taskSet = new HashSet<>();
 
 
        //tasks
@@ -56,6 +56,6 @@ public class InitDate implements CommandLineRunner {
         user.setUserName("finn");
         user.setPassword("1234");
         user.setTaskSet(taskSet);
-        userRepository.save(user);
+        userRepository.save(user);*/
     }
 }
