@@ -6,6 +6,7 @@ const divinprogress = document.getElementById('divinprogress');
 const divreview = document.getElementById('divreview');
 const divdone = document.getElementById('divdone');
 const pbButtonStatus = document.getElementById('setstatus');
+const pbButtonSubmit = document.getElementById('create-new-task-button');
 
 sessionStorage.setItem("name", "finn")
 
@@ -90,6 +91,7 @@ console.log("date = " + new Date().toLocaleDateString('en-GB'));
 
 // Get the modal
 const modal = document.getElementById("myModal");
+const modal2 = document.getElementById("myModaltask");
 
 
 // Get the <span> element that closes the modal
@@ -133,13 +135,26 @@ function changeStatusOnTask(){
 
 
 
+pbButtonStatus.addEventListener('click',changeStatusOnTask);
 
-function removeChildren(HtmlChildren){
-    for(child of HtmlChildren){
-        child.remove;
+// Get the <span> element that closes the modal
+const span1 = document.getElementsByClassName("close2")[0];
+
+pbButtonSubmit.addEventListener('click', () =>{
+    modal2.style.display = "block";
+})
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function () {
+    modal2.style.display = "none";
+}
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal2) {
+        modal2.style.display = "none";
     }
 }
-pbButtonStatus.addEventListener('click',changeStatusOnTask)
 
 
 

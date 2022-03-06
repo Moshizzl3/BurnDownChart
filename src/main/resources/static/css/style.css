@@ -1,9 +1,7 @@
 table {
-    border: 1px solid #333;
+    border: 5px solid #333;
     table-layout: auto;
     width: 900px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 
@@ -13,6 +11,12 @@ td {
     width: 900px;
     height: 500px;
 
+}
+
+.outerdiv{
+    display: flex;
+    margin-top: 50px;
+    margin-left: 50px;
 }
 
 thead,
@@ -30,11 +34,10 @@ tfoot {
     border: 1px solid #333;
     margin: 10px;
     padding: 10px;
-    box-shadow: 2px;
 }
 
 /* The Modal (background) */
-.modal {
+.modal, .modal2 {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -48,7 +51,7 @@ tfoot {
 }
 
 /* Modal Content/Box */
-.modal-content {
+.modal-content, .modal-content2 {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
@@ -58,7 +61,7 @@ tfoot {
 }
 
 /* The Close Button */
-.close {
+.close, close2{
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -66,7 +69,9 @@ tfoot {
 }
 
 .close:hover,
-.close:focus {
+.close2:hover,
+.close:focus,
+.close2:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

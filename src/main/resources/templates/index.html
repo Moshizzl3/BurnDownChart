@@ -6,63 +6,62 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<table>
-    <tr></tr>
-</table>
-
 <div class="outerdiv">
+    <div class="new-task-div" id="new-task-div">
+        <button class="create-new-task-button" id="create-new-task-button">Create new task</button>
 
-    <table>
-        <thead>
-        <tr>
-            <th colspan="4">Overview</th>
-        </tr>
-        </thead>
-        <th>not started</th>
-        <th>in progress</th>
-        <th>review</th>
-        <th>done</th>
-        <tbody>
-        <tr class="rows">
-            <td id="notstarted" class="notstarted">
-                <div class="colscrollbar" id="divnotstarted">
-                </div>
-            </td>
-            <td id="inprogress" class="inprogress">
-                <div class="colscrollbar" id="divinprogress">
-                </div>
-            </td>
-            <td id="review" class="review">
-                <div class="colscrollbar" id="divreview">
-                </div>
-            </td>
-            <td id="done" class="done">
-                <div class="colscrollbar" id="divdone">
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    </div>
+    <div class="table-div" id="table-div">
+        <table>
+            <thead>
+            <tr>
+                <th colspan="4">Overview</th>
+            </tr>
+            </thead>
+            <th>not started</th>
+            <th>in progress</th>
+            <th>review</th>
+            <th>done</th>
+            <tbody>
+            <tr class="rows">
+                <td id="notstarted" class="notstarted">
+                    <div class="colscrollbar" id="divnotstarted">
+                    </div>
+                </td>
+                <td id="inprogress" class="inprogress">
+                    <div class="colscrollbar" id="divinprogress">
+                    </div>
+                </td>
+                <td id="review" class="review">
+                    <div class="colscrollbar" id="divreview">
+                    </div>
+                </td>
+                <td id="done" class="done">
+                    <div class="colscrollbar" id="divdone">
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 
-</div>
+    <!-- The task Modal -->
+    <div id="myModal" class="modal">
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p id="p-modal-name">Some text in the Modal..</p>
-        <p id="p-modal-date">Some text in the Modal..</p>
-        <p id="p-modal-status">Some text in the Modal..</p>
-        <p id="p-modal-id" hidden>Some text in the Modal..</p>
-        <span>
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="p-modal-name">Some text in the Modal..</p>
+            <p id="p-modal-date">Some text in the Modal..</p>
+            <p id="p-modal-status">Some text in the Modal..</p>
+            <p id="p-modal-id" hidden>Some text in the Modal..</p>
+            <span>
                 <select id="dropDownModal">
                     <option value="inprogress">inprogress</option>
                     <option value="review">review</option>
@@ -72,11 +71,30 @@
                 </select>
                 <button id="setstatus">set status</button>
             </span>
-        <button id="delete">delete</button>
+            <button id="delete">delete</button>
+        </div>
+
+    </div>
+
+    <!-- The create new task Modal -->
+    <div id="myModaltask" class="modal2">
+
+        <!-- Modal content -->
+        <div class="modal-content2">
+            <span class="close2">&times;</span>
+            <p id="p-modal-taskname">Some text in the Modal..</p>
+            <p id="p-modal-taskdesc">Some text in the Modal..</p>
+            <span>
+                <textarea id="descText">
+
+                </textarea>
+                <button id="submitTask">submitTask</button>
+            </span>
+        </div>
+
     </div>
 
 </div>
-
 <script src="js/js.js"></script>
 </body>
 
