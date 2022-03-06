@@ -4,17 +4,36 @@ package com.example.burndownchartproject.controller;
 import com.example.burndownchartproject.model.Task;
 import com.example.burndownchartproject.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class TaskController {
 
   @Autowired
   TaskService taskService;
 
+  @GetMapping("/getAllTasks")
   public List<Task> getAllTasks() {
     return taskService.getAllTasks();
   }
+
+  @PutMapping("task/{id}")
+  public ResponseEntity<Task> updateTask(@PathVariable int id, @RequestBody Task task){
+    Optional<Task> optTask = taskService.findById(id);
+    if (optTask.isPresent()){
+      taskService.savetask(task);
+      return  new ResponseEntity<>(task, HttpStatus.OK);
+    } else {
+      Task taskNotFound = new Task();
+      taskNotFound.setName("No task with id: " + id);
+      return  new ResponseEntity<>(task, HttpStatus.NOT_FOUND);
+    }
+  }
 }
+
