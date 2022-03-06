@@ -28,11 +28,11 @@ public class InitDate implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-/*        Set<Task> taskSet = new HashSet<>();
+ /*       Set<Task> taskSet = new HashSet<>();
 
 
-       //tasks
-        for (int i = 0; i<10; i++) {
+        //tasks
+        for (int i = 0; i < 10; i++) {
 
             Task task = new Task();
             task.setDate(LocalDate.now());

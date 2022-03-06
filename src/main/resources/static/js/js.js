@@ -6,6 +6,7 @@ const divreview = document.getElementById('divreview');
 const divdone = document.getElementById('divdone');
 const pbButtonStatus = document.getElementById('setstatus');
 const pbButtonSubmit = document.getElementById('create-new-task-button');
+const pbButtonDelete = document.getElementById('delete');
 
 sessionStorage.setItem("name", "finn")
 
@@ -49,8 +50,34 @@ async function updateRow(task, input) {
     await updateStatusTask(task);
 }
 
+async function deleteTask(task) {
+    const urlDelete = 'task/' + task.taskId;
 
-function fillTaskToBoard(section, task) {
+    const fetchOption = {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: ""
+    }
+
+    const jsonString = JSON.stringify(task);
+    fetchOption.body = jsonString;
+
+    //call backend and wait for response
+    const response = await fetch(urlDelete, fetchOption);
+    if (!response.ok) {
+        console.log("shiiit, gik sq ikk")
+    }
+    return response;
+}
+
+async function deleteRow(task) {
+    await deleteTask(task);
+}
+
+
+async function fillTaskToBoard(section, task) {
 
     const newDiv = document.createElement("div");
     newDiv.classList.add("taskdiv");
@@ -93,8 +120,8 @@ function fillTaskToBoard(section, task) {
 fillTaskArray().then(loadTasks);
 
 function loadTasks() {
-    taskArray.forEach(task1 => {
-        let test = task1.taskId;
+
+     taskArray.forEach(task1 => {
         if ("notstarted" == task1.status)
             fillTaskToBoard(divnotstarted, task1);
 
@@ -135,6 +162,31 @@ function changeStatusOnTask() {
     clearDone.innerHTML = '';
 
     updateRow(getTask,taskStatus).then(loadTasks);
+
+    modalTask.style.display = "none";
+}
+
+async function changeStatusOnTaskDelete() {
+
+    let getTaskId = document.getElementById('p-modal-id').textContent;
+    let getTask = taskArray.find(task => task.taskId == getTaskId);
+
+    let clearNotStarted = document.getElementById('divnotstarted');
+    clearNotStarted.innerHTML = '';
+
+    let clearInProgress = document.getElementById('divinprogress');
+    clearInProgress.innerHTML = '';
+
+    let clearReview = document.getElementById('divreview');
+    clearReview.innerHTML = '';
+
+    let clearDone = document.getElementById('divdone');
+    clearDone.innerHTML = '';
+
+    deleteRow(getTask)
+        .then(() => taskArray = [])
+        .then(fillTaskArray)
+        .then(loadTasks);
 
     modalTask.style.display = "none";
 }

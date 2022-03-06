@@ -17,9 +17,11 @@ window.onclick = function (event) {
     if (event.target == modalTask) {
         modalTask.style.display = "none";
     }
+    if (event.target == modalNewTask) {
+        modalNewTask.style.display = "none";
+    }
 }
 
-pbButtonStatus.addEventListener('click', changeStatusOnTask);
 
 // Get the <span> element that closes the modal
 const span1 = document.getElementsByClassName("close2")[0];
@@ -33,9 +35,5 @@ span1.onclick = function () {
 }
 
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modalNewTask) {
-        modalNewTask.style.display = "none";
-    }
-}
+pbButtonStatus.addEventListener('click', changeStatusOnTask);
+pbButtonDelete.addEventListener('click', changeStatusOnTaskDelete);
