@@ -1,14 +1,14 @@
 table {
     border: 5px solid #333;
     table-layout: auto;
-    width: 900px;
+    width: 1200px;
 }
 
 
 td {
     border: 1px solid #333;
     table-layout: auto;
-    width: 900px;
+    width: 1200px;
     height: 500px;
 
 }
