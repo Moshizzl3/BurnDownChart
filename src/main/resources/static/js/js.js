@@ -191,24 +191,57 @@ async function changeStatusOnTaskDelete() {
     modalTask.style.display = "none";
 }
 
+async function updateTableNewTask() {
+
+    let getTaskId = document.getElementById('p-modal-id').textContent;
+    let getTask = taskArray.find(task => task.taskId == getTaskId);
+
+    let clearNotStarted = document.getElementById('divnotstarted');
+    clearNotStarted.innerHTML = '';
+
+    let clearInProgress = document.getElementById('divinprogress');
+    clearInProgress.innerHTML = '';
+
+    let clearReview = document.getElementById('divreview');
+    clearReview.innerHTML = '';
+
+    let clearDone = document.getElementById('divdone');
+    clearDone.innerHTML = '';
+
+}
+
+async function handleSubmit(event) {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+    //data.append('status', "notstarted")
+
+
+    const value = Object.fromEntries(data.entries());
+
+    const url = "http://localhost:8080/postTask";
+
+    const fetchOptions = {
+        method: "Post",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(value)
+    }
+
+    //calls backend and wait for return
+    const response = await fetch(url, fetchOptions);
+
+    if (!response.ok) {
+        console.log("something went wrong")
+    }
+    ;
+    modalNewTask.style.display = "none";
+    loadTasks();
+}
+
 const myForm = document.getElementById("task-form");
-myForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-
-    const formData = new FormData(this);
-
-    fetch("/postTask", {
-        method: 'POST',
-        body: formData
-    }).then(function (response) {
-        return response.text();
-    }).then(function (text) {
-        console.log(text);
-    }).catch(function (error) {
-        console.error(error);
-    })
-})
+myForm.addEventListener('submit', handleSubmit);
 
 
 

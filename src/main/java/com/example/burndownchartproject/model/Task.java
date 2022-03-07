@@ -19,10 +19,10 @@ public class Task {
   private String name;
 
   @Column
-  private LocalDate date;
+  private LocalDate date = LocalDate.now();
 
   @Column
-  private String status;
+  private String status = "notstarted";
 
   @Column
   private String description;
