@@ -1,20 +1,34 @@
 const url = 'http:/localhost:8080/getAllTasks';
 
-const divnotstarted = document.getElementById('divnotstarted');
-const divinprogress = document.getElementById('divinprogress');
-const divreview = document.getElementById('divreview');
-const divdone = document.getElementById('divdone');
+const divNotStarted = document.getElementById('divnotstarted');
+const divInProgress = document.getElementById('divinprogress');
+const divReview = document.getElementById('divreview');
+const divDone = document.getElementById('divdone');
 const pbButtonStatus = document.getElementById('setstatus');
 const pbButtonSubmit = document.getElementById('create-new-task-button');
 const pbButtonDelete = document.getElementById('delete');
+const sprintDropDown = document.getElementById('sprint-select')
 
 sessionStorage.setItem("name", "finn")
 
 let taskArray = [];
+let sprintArray = [];
 
 function fetchAllTasks() {
     return fetch('getAllTasks').then(res => res.json())
 }
+
+function fetchAllSprints() {
+    return fetch('getAllSprint').then(res => res.json())
+}
+
+async function fillSprintArray() {
+    const sprintList = await fetchAllSprints();
+    sprintList.forEach((sprint) => {
+        sprintArray.push(sprint)
+    })
+}
+
 
 async function fillTaskArray() {
     const taskList = await fetchAllTasks();
@@ -45,7 +59,7 @@ async function updateStatusTask(task) {
     return response;
 }
 
-async function updateRow(task, input) {
+async function updateTaskStatus(task, input) {
     task.status = input;
     await updateStatusTask(task);
 }
@@ -114,6 +128,9 @@ async function fillTaskToBoard(section, task) {
         pStatus.textContent = "Status: " + task.status;
         let pId = document.getElementById('p-modal-id')
         pId.textContent = task.taskId;
+        let pdesc = document.getElementById('descriptionText')
+        pdesc.textContent = task.description;
+
     })
 }
 
@@ -121,18 +138,23 @@ fillTaskArray().then(loadTasks);
 
 function loadTasks() {
 
-    taskArray.forEach(task1 => {
+
+    let filteredTasks = taskArray.filter(function (task) {
+        return task.sprint.sprintName == sprintDropDown.value;
+    });
+
+    filteredTasks.forEach(task1 => {
         if ("notstarted" == task1.status)
-            fillTaskToBoard(divnotstarted, task1);
+            fillTaskToBoard(divNotStarted, task1);
 
         else if ("inprogress" == task1.status)
-            fillTaskToBoard(divinprogress, task1);
+            fillTaskToBoard(divInProgress, task1);
 
         else if ("review" == task1.status)
-            fillTaskToBoard(divreview, task1);
+            fillTaskToBoard(divReview, task1);
 
         else if ("done" == task1.status)
-            fillTaskToBoard(divdone, task1);
+            fillTaskToBoard(divDone, task1);
 
         else {
             console.log("defualt");
@@ -140,13 +162,25 @@ function loadTasks() {
     })
 }
 
+function loadSprints() {
+
+    sprintArray.forEach(sprint => {
+        const option = document.createElement("option");
+        const optionNode = document.createTextNode(sprint.sprintName);
+        option.setAttribute('id', sprint.sprintId)
+        option.append(optionNode);
+        sprintDropDown.append(option)
+    })
+}
+
+fillSprintArray().then(loadSprints);
 
 function changeStatusOnTask() {
 
     let getTaskId = document.getElementById('p-modal-id').textContent;
     let getTask = taskArray.find(task => task.taskId == getTaskId);
-    console.log(getTask)
     let taskStatus = document.getElementById("dropDownModal").value;
+    let taskTime = document.getElementById("input-time").value;
     console.log(document.getElementById("dropDownModal").value)
 
     let clearNotStarted = document.getElementById('divnotstarted');
@@ -161,12 +195,16 @@ function changeStatusOnTask() {
     let clearDone = document.getElementById('divdone');
     clearDone.innerHTML = '';
 
-    updateRow(getTask, taskStatus).then(loadTasks);
+    updateTaskTime(getTask, taskTime)
+    updateTaskStatus(getTask, taskStatus)
+        .then(loadTasks)
+        .catch(err => console.log(err));
+    console.log(getTask)
 
     modalTask.style.display = "none";
 }
 
-async function changeStatusOnTaskDelete() {
+async function onTaskDelete() {
 
     let getTaskId = document.getElementById('p-modal-id').textContent;
     let getTask = taskArray.find(task => task.taskId == getTaskId);
@@ -186,15 +224,14 @@ async function changeStatusOnTaskDelete() {
     deleteRow(getTask)
         .then(() => taskArray = [])
         .then(fillTaskArray)
-        .then(loadTasks);
+        .then(loadTasks)
+        .catch(err => console.log(err));
 
     modalTask.style.display = "none";
 }
 
-async function updateTableNewTask() {
+async function updateTableNewTask(event) {
 
-    let getTaskId = document.getElementById('p-modal-id').textContent;
-    let getTask = taskArray.find(task => task.taskId == getTaskId);
 
     let clearNotStarted = document.getElementById('divnotstarted');
     clearNotStarted.innerHTML = '';
@@ -208,7 +245,12 @@ async function updateTableNewTask() {
     let clearDone = document.getElementById('divdone');
     clearDone.innerHTML = '';
 
+    handleSubmit(event)
+        .then(() => taskArray = [])
+        .then(fillTaskArray)
+        .then(loadTasks);
 }
+
 
 async function handleSubmit(event) {
     event.preventDefault();
@@ -217,7 +259,12 @@ async function handleSubmit(event) {
     //data.append('status', "notstarted")
 
 
+    //data.append("sprint[${sprintName}]",  "Sprint 2")
+
+
+
     const value = Object.fromEntries(data.entries());
+
 
     const url = "http://localhost:8080/postTask";
 
@@ -237,11 +284,36 @@ async function handleSubmit(event) {
     }
     ;
     modalNewTask.style.display = "none";
-    loadTasks();
+
 }
 
 const myForm = document.getElementById("task-form");
-myForm.addEventListener('submit', handleSubmit);
+myForm.addEventListener('submit', updateTableNewTask);
+
+
+async function updateTaskTime(task, input) {
+    task.timeSpent = input;
+    await updateStatusTask(task);
+}
+sprintDropDown.addEventListener('change', ()=>{
+    console.log(sprintDropDown.value)
+    clearContent().then(loadTasks);
+});
+
+async function clearContent(){
+    let clearNotStarted = document.getElementById('divnotstarted');
+    clearNotStarted.innerHTML = '';
+
+    let clearInProgress = document.getElementById('divinprogress');
+    clearInProgress.innerHTML = '';
+
+    let clearReview = document.getElementById('divreview');
+    clearReview.innerHTML = '';
+
+    let clearDone = document.getElementById('divdone');
+    clearDone.innerHTML = '';
+}
+
 
 
 

@@ -14,7 +14,7 @@ public class Sprint {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "spring_id")
+  @Column(name = "sprint_id")
   private int sprintId;
 
   @Column

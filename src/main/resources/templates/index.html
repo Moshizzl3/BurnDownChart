@@ -11,7 +11,15 @@
 
 <body>
 
+<h1 id="header-sprint"></h1>
+
 <div class="outerdiv">
+    <div>
+        <select id="sprint-select">
+
+        </select>
+    </div>
+
     <div class="new-task-div" id="new-task-div">
         <button class="create-new-task-button" id="create-new-task-button">Create new task</button>
 
@@ -60,6 +68,8 @@
             <p id="p-modal-name">Some text in the Modal..</p>
             <p id="p-modal-date">Some text in the Modal..</p>
             <p id="p-modal-status">Some text in the Modal..</p>
+            <label for="input-time">Time Spent</label><br>
+            <input id="input-time" type="number"><br>
             <p id="p-modal-id" hidden>Some text in the Modal..</p>
             <span>
                 <select id="dropDownModal">
@@ -72,7 +82,10 @@
             </span>
             <button id="delete">delete</button>
             <h1>Description</h1>
-            <p>bla bla </p>
+            <div class="divDesc">
+                <p id="descriptionText"> </p>
+            </div>
+
         </div>
 
 
@@ -90,6 +103,8 @@
                 <form id=task-form>
                       <label for="tname">Task Name:</label><br>
                       <input type="text" id="tname" name="name"><br>
+                          <label for="testimated-time">Estimated time:</label><br>
+                      <input type="number" id="testimated-time" name="estimatedTime"><br>
                       <input type="submit" value="Submit">
                 </form>
       <textarea rows="4" cols="50" name="description" id="description" form="task-form">Enter text here.. .

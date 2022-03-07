@@ -30,6 +30,9 @@ public class Task {
   @Column
   private double timeSpent;
 
+  @Column
+  private double estimatedTime;
+
   @ManyToOne
   @JoinColumn(name = "sprint_id")
   private Sprint sprint;
@@ -98,5 +101,17 @@ public class Task {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public void setTaskId(int taskId) {
+    this.taskId = taskId;
+  }
+
+  public double getEstimatedTime() {
+    return estimatedTime;
+  }
+
+  public void setEstimatedTime(double estimatedTime) {
+    this.estimatedTime = estimatedTime;
   }
 }

@@ -17,9 +17,6 @@ window.onclick = function (event) {
     if (event.target == modalTask) {
         modalTask.style.display = "none";
     }
-    if (event.target == modalNewTask) {
-        modalNewTask.style.display = "none";
-    }
 }
 
 
@@ -36,4 +33,5 @@ span1.onclick = function () {
 
 
 pbButtonStatus.addEventListener('click', changeStatusOnTask);
-pbButtonDelete.addEventListener('click', changeStatusOnTaskDelete);
+pbButtonDelete.addEventListener('click', onTaskDelete);
+
