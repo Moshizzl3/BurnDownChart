@@ -121,7 +121,7 @@ fillTaskArray().then(loadTasks);
 
 function loadTasks() {
 
-     taskArray.forEach(task1 => {
+    taskArray.forEach(task1 => {
         if ("notstarted" == task1.status)
             fillTaskToBoard(divnotstarted, task1);
 
@@ -161,7 +161,7 @@ function changeStatusOnTask() {
     let clearDone = document.getElementById('divdone');
     clearDone.innerHTML = '';
 
-    updateRow(getTask,taskStatus).then(loadTasks);
+    updateRow(getTask, taskStatus).then(loadTasks);
 
     modalTask.style.display = "none";
 }
@@ -190,6 +190,26 @@ async function changeStatusOnTaskDelete() {
 
     modalTask.style.display = "none";
 }
+
+const myForm = document.getElementById("task-form");
+myForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+
+    const formData = new FormData(this);
+
+    fetch("/postTask", {
+        method: 'POST',
+        body: formData
+    }).then(function (response) {
+        return response.text();
+    }).then(function (text) {
+        console.log(text);
+    }).catch(function (error) {
+        console.error(error);
+    })
+})
+
 
 
 

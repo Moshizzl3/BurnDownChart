@@ -23,6 +23,13 @@ public class TaskController {
     return taskService.getAllTasks();
   }
 
+  @PostMapping("/postTask")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Task postTask(@RequestBody Task task){
+    System.out.println("bla bla");
+    return taskService.createTask(task);
+  }
+
   @PutMapping("task/{id}")
   public ResponseEntity<Task> updateTask(@PathVariable int id, @RequestBody Task task){
     Optional<Task> optTask = taskService.findById(id);
