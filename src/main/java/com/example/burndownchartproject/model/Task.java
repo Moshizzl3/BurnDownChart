@@ -22,6 +22,9 @@ public class Task {
   private LocalDate date = LocalDate.now();
 
   @Column
+  private LocalDate CompletionDate;
+
+  @Column
   private String status = "notstarted";
 
   @Column
@@ -114,4 +117,13 @@ public class Task {
   public void setEstimatedTime(double estimatedTime) {
     this.estimatedTime = estimatedTime;
   }
+
+  public LocalDate getCompletionDate() {
+    return CompletionDate;
+  }
+
+  public void setCompletionDate(LocalDate completionDate) {
+    CompletionDate = completionDate;
+  }
+
 }
