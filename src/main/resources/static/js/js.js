@@ -262,7 +262,7 @@ async function createNewTask() {
     let body2 = {
         name: document.getElementById('tname').value,
         description: document.getElementById('description').value,
-        estimatedTime: 0.0,
+        estimatedTime: document.getElementById('testimated-time').value,
         sprint: {
             sprintId: sprintDropDown.value,
         },
