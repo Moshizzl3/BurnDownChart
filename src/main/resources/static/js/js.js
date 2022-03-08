@@ -8,11 +8,17 @@ const pbButtonStatus = document.getElementById('setstatus');
 const pbButtonSubmit = document.getElementById('create-new-task-button');
 const pbButtonDelete = document.getElementById('delete');
 const sprintDropDown = document.getElementById('sprint-select')
-
-sessionStorage.setItem("name", "finn")
+const userDropDown = document.getElementById('dropDownUserTask')
+const submitFormButton = document.getElementById('submitBtn')
 
 let taskArray = [];
 let sprintArray = [];
+let userArray = [];
+
+//load data and fills elements on start and on refresh
+fillSprintArray().then(loadSprints).then(setHeader);
+fillTaskArray().then(loadTasks);
+fillUserArray().then(loadUsers);
 
 function fetchAllTasks() {
     return fetch('getAllTasks').then(res => res.json())
@@ -23,7 +29,7 @@ function fetchAllSprints() {
 }
 
 function fetchAllUsers() {
-    return fetch('getAllSprint').then(res => res.json())
+    return fetch('getAllUsers').then(res => res.json())
 }
 
 async function fillSprintArray() {
@@ -35,11 +41,20 @@ async function fillSprintArray() {
 
 
 async function fillTaskArray() {
+    taskArray = [];
     const taskList = await fetchAllTasks();
     taskList.forEach((task) => {
         taskArray.push(task)
     })
 }
+
+async function fillUserArray() {
+    const userList = await fetchAllUsers();
+    userList.forEach(user => {
+        userArray.push(user)
+    })
+}
+
 
 async function updateStatusTask(task) {
     const urlUpdate = 'task/' + task.taskId;
@@ -110,15 +125,15 @@ async function fillTaskToBoard(section, task) {
     pStatus.append(pNodeStatus);
 
     const pAssignedTo = document.createElement("p");
-    const pNodeAssignedTo = document.createTextNode('Assigned To: ' +  task.user.userName);
+    const pNodeAssignedTo = document.createTextNode('Assigned To: ' + task.user.userName);
     pAssignedTo.append(pNodeAssignedTo);
     const pTaskTime = document.createElement("p");
 
-    if (section != divDone){
-    const pNodeEstimatedTime = document.createTextNode('Estimated time: ' +  task.estimatedTime);
-    pTaskTime.append(pNodeEstimatedTime);
+    if (section != divDone) {
+        const pNodeEstimatedTime = document.createTextNode('Estimated time: ' + task.estimatedTime);
+        pTaskTime.append(pNodeEstimatedTime);
     } else {
-        const pNodeEstimatedTime = document.createTextNode('Time spent: ' +  task.timeSpent);
+        const pNodeEstimatedTime = document.createTextNode('Time spent: ' + task.timeSpent);
         pTaskTime.append(pNodeEstimatedTime);
     }
 
@@ -150,7 +165,6 @@ async function fillTaskToBoard(section, task) {
     })
 }
 
-fillTaskArray().then(loadTasks);
 
 function loadTasks() {
 
@@ -183,14 +197,25 @@ function loadSprints() {
     sprintArray.forEach(sprint => {
         const option = document.createElement("option");
         const optionNode = document.createTextNode(sprint.sprintName);
-        option.setAttribute('id', sprint.sprintId)
+        option.setAttribute('id', 'sprint')
         option.setAttribute('value', sprint.sprintId)
         option.append(optionNode);
         sprintDropDown.append(option)
     })
 }
 
-fillSprintArray().then(loadSprints).then(setHeader);
+
+function loadUsers() {
+
+    userArray.forEach(user => {
+        const option = document.createElement("option");
+        const optionNode = document.createTextNode(user.userName);
+        option.setAttribute('id', 'user')
+        option.setAttribute('value', user.userId)
+        option.append(optionNode);
+        userDropDown.append(option)
+    })
+}
 
 async function changeStatusOnTask() {
 
@@ -198,15 +223,14 @@ async function changeStatusOnTask() {
     let getTask = taskArray.find(task => task.taskId == getTaskId);
     let taskStatus = document.getElementById("dropDownModal").value;
     let taskTime = document.getElementById("input-time").value;
-    console.log(document.getElementById("dropDownModal").value)
 
     await clearContent();
-    await updateTaskTime(getTask, taskTime);
-    updateTaskStatus(getTask, taskStatus)
-        .then(loadTasks)
-        .catch(err => console.log(err));
-    console.log(getTask)
 
+    await updateTaskAssignedTo(getTask, userDropDown.value)
+    await updateTaskTime(getTask, taskTime);
+    await updateTaskStatus(getTask, taskStatus)
+    await fillTaskArray
+    fillTaskArray().then(loadTasks);
     modalTask.style.display = "none";
 }
 
@@ -221,30 +245,21 @@ async function onTaskDelete() {
         .then(() => taskArray = [])
         .then(fillTaskArray)
         .then(loadTasks)
-        .catch(err => console.log(err));
 
     modalTask.style.display = "none";
 }
 
-async function updateTableNewTask(event) {
-
+async function updateTableNewTask() {
     await clearContent();
 
-    createNewTask(event)
-        .then(() => taskArray = [])
-        .then(fillTaskArray)
-        .then(loadTasks);
+    await createNewTask();
+    fillTaskArray().then(loadTasks);
 }
 
 
-async function createNewTask(event) {
-    event.preventDefault();
+async function createNewTask() {
 
-    const data = new FormData(event.target);
-    //data.append('status', "notstarted")
-
-
-    let body2 =   {
+    let body2 = {
         name: document.getElementById('tname').value,
         description: document.getElementById('description').value,
         estimatedTime: 0.0,
@@ -255,9 +270,6 @@ async function createNewTask(event) {
             userId: 1,
         }
     }
-
-    const value = Object.fromEntries(data.entries());
-
 
     const url = "http://localhost:8080/postTask";
 
@@ -280,29 +292,25 @@ async function createNewTask(event) {
 
 }
 
-const myForm = document.getElementById("task-form");
-myForm.addEventListener('submit', updateTableNewTask);
-
-
 async function updateTaskTime(task, input) {
     task.timeSpent = input;
     await updateStatusTask(task);
 }
 
-async function setHeader(){
+async function updateTaskAssignedTo(task, input) {
+    task.user.userId = input;
+    await updateStatusTask(task);
+}
+
+async function setHeader() {
     const sprintHeader = document.getElementById('header-sprint');
     sprintHeader.innerHTML = '';
     const sprint = sprintArray.find(sprint => sprint.sprintId == sprintDropDown.value)
-    console.log(sprintArray)
     const sprintText = document
         .createTextNode(sprint.sprintName + ' - Period from: ' + sprint.startDate + ' to: ' + sprint.endDate);
     sprintHeader.append(sprintText);
 }
 
-
-sprintDropDown.addEventListener('change', () => {
-    clearContent().then(loadTasks).then(setHeader);
-});
 
 async function clearContent() {
     let clearNotStarted = document.getElementById('divnotstarted');
@@ -318,7 +326,9 @@ async function clearContent() {
     clearDone.innerHTML = '';
 }
 
+//Event listeners
+submitFormButton.addEventListener('click', updateTableNewTask)
 
-
-
-
+sprintDropDown.addEventListener('change', () => {
+    clearContent().then(loadTasks).then(setHeader);
+});

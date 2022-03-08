@@ -63,5 +63,12 @@ public class InitDate implements CommandLineRunner {
         user.setPassword("1234");
         user.setTaskSet(taskSet);
         userRepository.save(user);
+
+        //user
+        User user2 = new User();
+        user2.setUserName("Bo");
+        user2.setPassword("1234");
+        user2.setTaskSet(taskSet);
+        userRepository.save(user2);
     }
 }
