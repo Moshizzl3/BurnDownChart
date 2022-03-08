@@ -140,7 +140,7 @@ function loadTasks() {
 
 
     let filteredTasks = taskArray.filter(function (task) {
-        return task.sprint.sprintName == sprintDropDown.value;
+        return task.sprint.sprintId == sprintDropDown.value;
     });
 
     filteredTasks.forEach(task1 => {
@@ -168,6 +168,7 @@ function loadSprints() {
         const option = document.createElement("option");
         const optionNode = document.createTextNode(sprint.sprintName);
         option.setAttribute('id', sprint.sprintId)
+        option.setAttribute('value', sprint.sprintId)
         option.append(optionNode);
         sprintDropDown.append(option)
     })
@@ -175,7 +176,7 @@ function loadSprints() {
 
 fillSprintArray().then(loadSprints);
 
-function changeStatusOnTask() {
+async function changeStatusOnTask() {
 
     let getTaskId = document.getElementById('p-modal-id').textContent;
     let getTask = taskArray.find(task => task.taskId == getTaskId);
@@ -183,19 +184,8 @@ function changeStatusOnTask() {
     let taskTime = document.getElementById("input-time").value;
     console.log(document.getElementById("dropDownModal").value)
 
-    let clearNotStarted = document.getElementById('divnotstarted');
-    clearNotStarted.innerHTML = '';
-
-    let clearInProgress = document.getElementById('divinprogress');
-    clearInProgress.innerHTML = '';
-
-    let clearReview = document.getElementById('divreview');
-    clearReview.innerHTML = '';
-
-    let clearDone = document.getElementById('divdone');
-    clearDone.innerHTML = '';
-
-    updateTaskTime(getTask, taskTime)
+    await clearContent();
+    await updateTaskTime(getTask, taskTime);
     updateTaskStatus(getTask, taskStatus)
         .then(loadTasks)
         .catch(err => console.log(err));
@@ -209,17 +199,7 @@ async function onTaskDelete() {
     let getTaskId = document.getElementById('p-modal-id').textContent;
     let getTask = taskArray.find(task => task.taskId == getTaskId);
 
-    let clearNotStarted = document.getElementById('divnotstarted');
-    clearNotStarted.innerHTML = '';
-
-    let clearInProgress = document.getElementById('divinprogress');
-    clearInProgress.innerHTML = '';
-
-    let clearReview = document.getElementById('divreview');
-    clearReview.innerHTML = '';
-
-    let clearDone = document.getElementById('divdone');
-    clearDone.innerHTML = '';
+    await clearContent();
 
     deleteRow(getTask)
         .then(() => taskArray = [])
@@ -232,36 +212,33 @@ async function onTaskDelete() {
 
 async function updateTableNewTask(event) {
 
+    await clearContent();
 
-    let clearNotStarted = document.getElementById('divnotstarted');
-    clearNotStarted.innerHTML = '';
-
-    let clearInProgress = document.getElementById('divinprogress');
-    clearInProgress.innerHTML = '';
-
-    let clearReview = document.getElementById('divreview');
-    clearReview.innerHTML = '';
-
-    let clearDone = document.getElementById('divdone');
-    clearDone.innerHTML = '';
-
-    handleSubmit(event)
+    createNewTask(event)
         .then(() => taskArray = [])
         .then(fillTaskArray)
         .then(loadTasks);
 }
 
 
-async function handleSubmit(event) {
+async function createNewTask(event) {
     event.preventDefault();
 
     const data = new FormData(event.target);
     //data.append('status', "notstarted")
 
 
-    //data.append("sprint[${sprintName}]",  "Sprint 2")
-
-
+    let body2 =   {
+        name: document.getElementById('tname').value,
+        description: document.getElementById('description').value,
+        estimatedTime: 0.0,
+        sprint: {
+            sprintId: sprintDropDown.value,
+        },
+        user: {
+            userId: 1,
+        }
+    }
 
     const value = Object.fromEntries(data.entries());
 
@@ -273,7 +250,7 @@ async function handleSubmit(event) {
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify(value)
+        body: JSON.stringify(body2)
     }
 
     //calls backend and wait for return
@@ -295,12 +272,13 @@ async function updateTaskTime(task, input) {
     task.timeSpent = input;
     await updateStatusTask(task);
 }
-sprintDropDown.addEventListener('change', ()=>{
+
+sprintDropDown.addEventListener('change', () => {
     console.log(sprintDropDown.value)
     clearContent().then(loadTasks);
 });
 
-async function clearContent(){
+async function clearContent() {
     let clearNotStarted = document.getElementById('divnotstarted');
     clearNotStarted.innerHTML = '';
 
@@ -313,6 +291,9 @@ async function clearContent(){
     let clearDone = document.getElementById('divdone');
     clearDone.innerHTML = '';
 }
+
+let value1 = sprintDropDown.value
+console.log(value1)
 
 
 
