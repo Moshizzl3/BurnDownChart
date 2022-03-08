@@ -53,8 +53,8 @@ public class InitDate implements CommandLineRunner {
 
         Sprint sprint2 = new Sprint();
         sprint2.setSprintName("Sprint 2");
-        sprint2.setStartDate(LocalDate.parse("2022-03-07"));
-        sprint2.setEndDate(LocalDate.parse("2022-03-10"));
+        sprint2.setStartDate(LocalDate.parse("2022-03-11"));
+        sprint2.setEndDate(LocalDate.parse("2022-03-14"));
         sprintRepository.save(sprint2);
 
         //user

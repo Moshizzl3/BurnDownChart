@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-public class SprintController {
+public class SprintRESTController {
 
     @Autowired
     SprintService sprintService;

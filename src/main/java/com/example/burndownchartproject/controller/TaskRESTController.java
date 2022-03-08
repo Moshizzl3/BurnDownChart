@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-public class TaskController {
+public class TaskRESTController {
 
   @Autowired
   TaskService taskService;

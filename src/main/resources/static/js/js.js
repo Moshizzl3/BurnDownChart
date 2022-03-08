@@ -22,6 +22,10 @@ function fetchAllSprints() {
     return fetch('getAllSprint').then(res => res.json())
 }
 
+function fetchAllUsers() {
+    return fetch('getAllSprint').then(res => res.json())
+}
+
 async function fillSprintArray() {
     const sprintList = await fetchAllSprints();
     sprintList.forEach((sprint) => {
@@ -86,10 +90,6 @@ async function deleteTask(task) {
     return response;
 }
 
-async function deleteRow(task) {
-    await deleteTask(task);
-}
-
 
 async function fillTaskToBoard(section, task) {
 
@@ -98,20 +98,36 @@ async function fillTaskToBoard(section, task) {
     newDiv.setAttribute('id', task.taskId);
 
     const pName = document.createElement("p");
-    const pNodeName = document.createTextNode(task.name);
+    const pNodeName = document.createTextNode('Task Name: ' + task.name);
     pName.append(pNodeName);
 
     const pDate = document.createElement("p");
-    const pNodeDate = document.createTextNode(task.date);
+    const pNodeDate = document.createTextNode('Creation Date: ' + task.date);
     pDate.append(pNodeDate);
 
     const pStatus = document.createElement("p");
-    const pNodeStatus = document.createTextNode(task.status);
+    const pNodeStatus = document.createTextNode('Task Status: ' + task.status);
     pStatus.append(pNodeStatus);
+
+    const pAssignedTo = document.createElement("p");
+    const pNodeAssignedTo = document.createTextNode('Assigned To: ' +  task.user.userName);
+    pAssignedTo.append(pNodeAssignedTo);
+    const pTaskTime = document.createElement("p");
+
+    if (section != divDone){
+    const pNodeEstimatedTime = document.createTextNode('Estimated time: ' +  task.estimatedTime);
+    pTaskTime.append(pNodeEstimatedTime);
+    } else {
+        const pNodeEstimatedTime = document.createTextNode('Time spent: ' +  task.timeSpent);
+        pTaskTime.append(pNodeEstimatedTime);
+    }
+
 
     newDiv.append(pName)
     newDiv.append(pDate)
     newDiv.append(pStatus)
+    newDiv.append(pAssignedTo)
+    newDiv.append(pTaskTime)
     section.append(newDiv)
 
     const randomColor = Math.floor(Math.random() * 16777215).toString(16);
@@ -144,16 +160,16 @@ function loadTasks() {
     });
 
     filteredTasks.forEach(task1 => {
-        if ("notstarted" == task1.status)
+        if ("notstarted" === task1.status)
             fillTaskToBoard(divNotStarted, task1);
 
-        else if ("inprogress" == task1.status)
+        else if ("inprogress" === task1.status)
             fillTaskToBoard(divInProgress, task1);
 
-        else if ("review" == task1.status)
+        else if ("review" === task1.status)
             fillTaskToBoard(divReview, task1);
 
-        else if ("done" == task1.status)
+        else if ("done" === task1.status)
             fillTaskToBoard(divDone, task1);
 
         else {
@@ -174,7 +190,7 @@ function loadSprints() {
     })
 }
 
-fillSprintArray().then(loadSprints);
+fillSprintArray().then(loadSprints).then(setHeader);
 
 async function changeStatusOnTask() {
 
@@ -201,7 +217,7 @@ async function onTaskDelete() {
 
     await clearContent();
 
-    deleteRow(getTask)
+    deleteTask(getTask)
         .then(() => taskArray = [])
         .then(fillTaskArray)
         .then(loadTasks)
@@ -273,9 +289,19 @@ async function updateTaskTime(task, input) {
     await updateStatusTask(task);
 }
 
+async function setHeader(){
+    const sprintHeader = document.getElementById('header-sprint');
+    sprintHeader.innerHTML = '';
+    const sprint = sprintArray.find(sprint => sprint.sprintId == sprintDropDown.value)
+    console.log(sprintArray)
+    const sprintText = document
+        .createTextNode(sprint.sprintName + ' - Period from: ' + sprint.startDate + ' to: ' + sprint.endDate);
+    sprintHeader.append(sprintText);
+}
+
+
 sprintDropDown.addEventListener('change', () => {
-    console.log(sprintDropDown.value)
-    clearContent().then(loadTasks);
+    clearContent().then(loadTasks).then(setHeader);
 });
 
 async function clearContent() {
@@ -291,9 +317,6 @@ async function clearContent() {
     let clearDone = document.getElementById('divdone');
     clearDone.innerHTML = '';
 }
-
-let value1 = sprintDropDown.value
-console.log(value1)
 
 
 
