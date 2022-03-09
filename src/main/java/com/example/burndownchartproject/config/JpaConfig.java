@@ -20,9 +20,7 @@ class JpaConfig {
     }
 
     private String getDataSourceUrl() {
-        return "jdbc:mysql://"
-                + System.getenv("DB_HOST") + "/"
-                + System.getenv("DB_NAME")
-                + "?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false";
+        return System.getenv("JDBC_DATABASE_URL");
+
     }
 }
