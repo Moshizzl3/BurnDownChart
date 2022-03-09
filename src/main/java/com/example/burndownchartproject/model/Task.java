@@ -1,9 +1,6 @@
 package com.example.burndownchartproject.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -19,10 +16,10 @@ public class Task {
   private String name;
 
   @Column
-  private LocalDate date = LocalDate.now();
+  private LocalDate creationDate = LocalDate.now();
 
   @Column
-  private LocalDate CompletionDate;
+  private LocalDate completionDate;
 
   @Column
   private String status = "notstarted";
@@ -53,8 +50,8 @@ public class Task {
     return name;
   }
 
-  public LocalDate getDate() {
-    return date;
+  public LocalDate getCreationDate() {
+    return creationDate;
   }
 
   public String getStatus() {
@@ -73,8 +70,8 @@ public class Task {
     this.name = name;
   }
 
-  public void setDate(LocalDate date) {
-    this.date = date;
+  public void setCreationDate(LocalDate date) {
+    this.creationDate = date;
   }
 
   public void setStatus(String status) {
@@ -119,11 +116,11 @@ public class Task {
   }
 
   public LocalDate getCompletionDate() {
-    return CompletionDate;
+    return completionDate;
   }
 
   public void setCompletionDate(LocalDate completionDate) {
-    CompletionDate = completionDate;
+    this.completionDate = completionDate;
   }
 
 }

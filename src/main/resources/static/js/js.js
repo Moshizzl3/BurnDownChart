@@ -79,6 +79,9 @@ async function updateStatusTask(task) {
 }
 
 async function updateTaskStatus(task, input) {
+    if (input === 'done'){
+        task.completionDate = new Date().toLocaleDateString('en-CA');
+    }
     task.status = input;
     await updateStatusTask(task);
 }
@@ -117,7 +120,7 @@ async function fillTaskToBoard(section, task) {
     pName.append(pNodeName);
 
     const pDate = document.createElement("p");
-    const pNodeDate = document.createTextNode('Creation Date: ' + task.date);
+    const pNodeDate = document.createTextNode('Creation Date: ' + task.creationDate);
     pDate.append(pNodeDate);
 
     const pStatus = document.createElement("p");
@@ -154,7 +157,7 @@ async function fillTaskToBoard(section, task) {
         let pName = document.getElementById('p-modal-name')
         pName.textContent = "Name: " + task.name;
         let pDate = document.getElementById('p-modal-date')
-        pDate.textContent = "Date: " + task.date;
+        pDate.textContent = "Date: " + task.creationDate;
         let pStatus = document.getElementById('p-modal-status')
         pStatus.textContent = "Status: " + task.status;
         let pId = document.getElementById('p-modal-id')
@@ -332,3 +335,5 @@ submitFormButton.addEventListener('click', updateTableNewTask)
 sprintDropDown.addEventListener('change', () => {
     clearContent().then(loadTasks).then(setHeader);
 });
+
+console.log(new Date().toLocaleDateString('en-CA'))

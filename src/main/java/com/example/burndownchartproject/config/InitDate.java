@@ -28,14 +28,13 @@ public class InitDate implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-/*      Set<Task> taskSet = new HashSet<>();
+      Set<Task> taskSet = new HashSet<>();
 
 
         //tasks
         for (int i = 0; i < 10; i++) {
 
             Task task = new Task();
-            task.setDate(LocalDate.now());
             task.setName("Task " + (i + 1));
             task.setDescription("Det er virkelig en task");
             task.setStatus("notstarted");
@@ -69,6 +68,6 @@ public class InitDate implements CommandLineRunner {
         user2.setUserName("Bo");
         user2.setPassword("1234");
         user2.setTaskSet(taskSet);
-        userRepository.save(user2);*/
+        userRepository.save(user2);
     }
 }
