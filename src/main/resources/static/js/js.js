@@ -1,5 +1,3 @@
-const url = 'http:/localhost:8080/getAllTasks';
-
 const divNotStarted = document.getElementById('divnotstarted');
 const divInProgress = document.getElementById('divinprogress');
 const divReview = document.getElementById('divreview');
@@ -274,7 +272,7 @@ async function createNewTask() {
         }
     }
 
-    const url = "http://localhost:8080/postTask";
+    const url = "postTask";
 
     const fetchOptions = {
         method: "Post",
