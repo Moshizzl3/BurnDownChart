@@ -22,4 +22,5 @@ class JpaConfig {
     private String getDataSourceUrl() {
         return System.getenv("JDBC_DATABASE_URL");
     }
+
 }
