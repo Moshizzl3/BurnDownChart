@@ -34,8 +34,6 @@ public class InitDate implements CommandLineRunner {
         //tasks
         for (int i = 0; i < 10; i++) {
 
-        heej
-
             Task task = new Task();
             task.setName("Task " + (i + 1));
             task.setDescription("Det er virkelig en task");
