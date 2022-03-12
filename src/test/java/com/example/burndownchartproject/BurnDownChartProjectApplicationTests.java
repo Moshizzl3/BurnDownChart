@@ -16,4 +16,10 @@ class BurnDownChartProjectApplicationTests {
         Assertions.assertEquals(2, 1+1);
     }
 
+    @Test
+    public void testSomething2(){
+        Assertions.assertNotEquals(3, 1+1);
+    }
+
+
 }
