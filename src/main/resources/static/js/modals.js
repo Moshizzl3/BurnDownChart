@@ -29,8 +29,8 @@ pbButtonSubmit.addEventListener('click', () => {
 // When the user clicks on <span> (x), close the modal
 span1.onclick = function () {
     modalNewTask.style.display = "none";
-}
 
+}
 
 pbButtonStatus.addEventListener('click', changeStatusOnTask);
 pbButtonDelete.addEventListener('click', onTaskDelete);

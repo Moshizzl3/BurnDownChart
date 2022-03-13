@@ -107,7 +107,7 @@ async function deleteTask(task) {
 }
 
 
-async function fillTaskToBoard(section, task) {
+async function fillTaskToBoard(section, task, color) {
 
     const newDiv = document.createElement("div");
     newDiv.classList.add("taskdiv");
@@ -146,8 +146,7 @@ async function fillTaskToBoard(section, task) {
     newDiv.append(pTaskTime)
     section.append(newDiv)
 
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    newDiv.style.backgroundColor = "#" + randomColor;
+    newDiv.style.backgroundColor = color;
 
     // When the user clicks on the div, open the modal
     newDiv.addEventListener('click', () => {
@@ -176,16 +175,16 @@ function loadTasks() {
 
     filteredTasks.forEach(task1 => {
         if ("notstarted" === task1.status)
-            fillTaskToBoard(divNotStarted, task1);
+            fillTaskToBoard(divNotStarted, task1, '#d9cfce');
 
         else if ("inprogress" === task1.status)
-            fillTaskToBoard(divInProgress, task1);
+            fillTaskToBoard(divInProgress, task1, '#f5d9a9');
 
         else if ("review" === task1.status)
-            fillTaskToBoard(divReview, task1);
+            fillTaskToBoard(divReview, task1, '#84f0ca');
 
         else if ("done" === task1.status)
-            fillTaskToBoard(divDone, task1);
+            fillTaskToBoard(divDone, task1, '#62f075');
 
         else {
             console.log("defualt");
