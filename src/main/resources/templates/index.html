@@ -27,7 +27,7 @@
 
     <div class="" id="new-task-div">
         <button class="btn btn-success" id="create-new-task-button" data-bs-toggle="modal" data-bs-target="#myModal2">Create new task</button>
-        <select id="sprint-select"></select>
+        <select id="sprint-select"  class="form-select" aria-label="Default select example"></select>
     </div>
 
     <div class="table-div table" id="table-div">
@@ -83,7 +83,7 @@
                     <p id="p-modal-id" hidden>Some text in the Modal..</p>
                     <span>
                 <label for="dropDownModal">Set Status</label><br>
-                <select id="dropDownModal">
+                <select  class="form-select" aria-label="Default select example" id="dropDownModal">
                     <option value="inprogress">inprogress</option>
                     <option value="review">review</option>
                     <option value="done">done</option>
@@ -92,7 +92,7 @@
             </span>
                     <div id="divUserDropDown">
                         <label for="dropDownUserTask">Assign to</label><br>
-                        <select id="dropDownUserTask">
+                        <select id="dropDownUserTask"  class="form-select" aria-label="Default select example">
                         </select>
                     </div>
                     <br>
