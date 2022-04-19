@@ -1,9 +1,12 @@
 table {
     border: 5px solid #333;
     table-layout: auto;
-    width: 1200px;
+  width: 100%;
 }
 
+.myBody{
+    background-color: darkcyan;
+}
 
 td {
     border: 1px solid #333;
@@ -14,9 +17,9 @@ td {
 }
 
 .outerdiv{
-    display: flex;
     margin-top: 50px;
     margin-left: 50px;
+    width: 1200px;
 }
 
 thead,
@@ -40,4 +43,39 @@ tfoot {
 .userStoryDiv {
     width: 100%;
     border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+    background-color: rgba(0, 255, 0, 0.1)
+}
+.story-row{
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+}
+.story-div{
+    font-size: 15px;
+    border: 1px solid #333;
+    margin: 10px;
+    padding: 10px;
+    opacity: 0.9;
+}
+
+.colscrollbar-x{
+    overflow-x: scroll;
+    border: 1px solid #333;
+}
+.real-outer-div{
+    display: flex;
+}
+.new-task-div{
+    margin: 10px;
+    padding: 10px;
+}
+.function-row{
+    margin: 1px;
+    padding: 1px;
+}
+.table-div{
+    background-color: rgba(0, 255, 0, 0.1);
+    border: 1px solid rebeccapurple;
 }
