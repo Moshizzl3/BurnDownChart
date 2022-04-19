@@ -112,6 +112,8 @@ async function fillTaskToBoard(section, task, color) {
     const newDiv = document.createElement("div");
     newDiv.classList.add("taskdiv");
     newDiv.setAttribute('id', task.taskId);
+    newDiv.setAttribute('data-bs-toggle', 'modal');
+    newDiv.setAttribute('data-bs-target', '#myModal')
 
     const pName = document.createElement("p");
     const pNodeName = document.createTextNode('Task Name: ' + task.name);
@@ -150,7 +152,6 @@ async function fillTaskToBoard(section, task, color) {
 
     // When the user clicks on the div, open the modal
     newDiv.addEventListener('click', () => {
-        modalTask.style.display = "block";
         let pName = document.getElementById('p-modal-name')
         pName.textContent = "Name: " + task.name;
         let pDate = document.getElementById('p-modal-date')
@@ -231,7 +232,6 @@ async function changeStatusOnTask() {
     await updateTaskStatus(getTask, taskStatus)
     await fillTaskArray
     fillTaskArray().then(loadTasks);
-    modalTask.style.display = "none";
 }
 
 async function onTaskDelete() {
@@ -328,6 +328,8 @@ async function clearContent() {
 
 //Event listeners
 submitFormButton.addEventListener('click', updateTableNewTask)
+pbButtonStatus.addEventListener('click', changeStatusOnTask);
+pbButtonDelete.addEventListener('click', onTaskDelete);
 
 sprintDropDown.addEventListener('change', () => {
     clearContent().then(loadTasks).then(setHeader);
