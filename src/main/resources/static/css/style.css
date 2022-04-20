@@ -64,7 +64,6 @@ tfoot {
 
 .colscrollbar-x {
     overflow-x: scroll;
-    border: 1px solid #333;
 }
 
 .real-outer-div {
@@ -88,12 +87,7 @@ tfoot {
     padding: 10px;
 }
 
-.story-row {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    cursor: move;
-}
+
 
 .story-div {
     border: 3px solid #666;

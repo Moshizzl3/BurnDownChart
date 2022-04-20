@@ -1,5 +1,5 @@
-const storyNotStarted = document.getElementById('storynotstarted');
-const storyInProgress = document.getElementById('storyinprogress');
+const storyNotStarted = document.getElementById('backlog');
+const storyInProgress = document.getElementById('sprint-backlog');
 
 let userStoryArray = []
 
@@ -13,10 +13,10 @@ function loadStories() {
 
 
     userStoryArray.forEach(story => {
-        if ("notstarted" === story.status)
+        if ("backlog" === story.status)
             fillStoryToBoard(storyNotStarted, story, '#d9cfce');
 
-        else if ("inprogress" === story.status)
+        else if ("sprint-backlog" === story.status)
             fillStoryToBoard(storyInProgress, story, '#f5d9a9');
 
         else {
@@ -84,10 +84,28 @@ async function fillStoryToBoard(section, story, color) {
 
     })
     newDiv.addEventListener('dragstart', handleDragStart);
-    newDiv.addEventListener('dragover', handleDragOver);
-    newDiv.addEventListener('dragenter', handleDragEnter);
-    newDiv.addEventListener('dragleave', handleDragLeave);
-    newDiv.addEventListener('dragend', handleDragEnd);
-    newDiv.addEventListener('drop', handleDrop);
+}
 
+async function updateStatusStory(story, status) {
+
+    story.status = status;
+    const urlUpdate = 'userStory/' + story.userStoryId;
+
+    const fetchOption = {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: ""
+    }
+
+    const jsonString = JSON.stringify(story);
+    fetchOption.body = jsonString;
+
+    //call backend and wait for response
+    const response = await fetch(urlUpdate, fetchOption);
+    if (!response.ok) {
+        console.log("shiiit, gik sq ikk")
+    }
+    return response;
 }
