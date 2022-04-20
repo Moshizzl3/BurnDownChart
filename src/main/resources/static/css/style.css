@@ -64,6 +64,7 @@ tfoot {
 
 .colscrollbar-x {
     overflow-x: scroll;
+    width: 1200px;
 }
 
 .real-outer-div {

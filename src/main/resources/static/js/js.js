@@ -7,7 +7,6 @@ const pbButtonSubmit = document.getElementById('create-new-task-button');
 const pbButtonDelete = document.getElementById('delete');
 const sprintDropDown = document.getElementById('sprint-select')
 const userDropDown = document.getElementById('dropDownUserTask')
-const submitFormButton = document.getElementById('submitBtn')
 
 let taskArray = [];
 let sprintArray = [];
@@ -245,52 +244,16 @@ async function onTaskDelete() {
         .then(() => taskArray = [])
         .then(fillTaskArray)
         .then(loadTasks)
-
-    modalTask.style.display = "none";
 }
 
 async function updateTableNewTask() {
     await clearContent();
 
-    await createNewTask();
+    await createNewStory("postTask");
     fillTaskArray().then(loadTasks);
 }
 
 
-async function createNewTask() {
-
-    let body2 = {
-        name: document.getElementById('tname').value,
-        description: document.getElementById('description').value,
-        estimatedTime: document.getElementById('testimated-time').value,
-        sprint: {
-            sprintId: sprintDropDown.value,
-        },
-        user: {
-            userId: 1,
-        }
-    }
-
-    const url = "postTask";
-
-    const fetchOptions = {
-        method: "Post",
-        headers: {
-            "Content-type": "application/json"
-        },
-        body: JSON.stringify(body2)
-    }
-
-    //calls backend and wait for return
-    const response = await fetch(url, fetchOptions);
-
-    if (!response.ok) {
-        console.log("something went wrong")
-    }
-    ;
-    modalNewTask.style.display = "none";
-
-}
 
 async function updateTaskTime(task, input) {
     task.timeSpent = input;
@@ -327,7 +290,7 @@ async function clearContent() {
 }
 
 //Event listeners
-submitFormButton.addEventListener('click', updateTableNewTask)
+
 pbButtonStatus.addEventListener('click', changeStatusOnTask);
 pbButtonDelete.addEventListener('click', onTaskDelete);
 

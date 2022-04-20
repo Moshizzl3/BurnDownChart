@@ -1,5 +1,6 @@
 const storyNotStarted = document.getElementById('backlog');
 const storyInProgress = document.getElementById('sprint-backlog');
+const submitFormButton = document.getElementById('storySubmitBtn');
 
 let userStoryArray = []
 
@@ -39,7 +40,7 @@ async function fillStoryToBoard(section, story, color) {
     newDiv.classList.add("story-div");
     newDiv.setAttribute('id', story.userStoryId);
     newDiv.setAttribute('data-bs-toggle', 'modal');
-    newDiv.setAttribute('data-bs-target', '#myModal')
+    newDiv.setAttribute('data-bs-target', '#myModal4')
     newDiv.setAttribute('draggable', 'true')
 
     const pName = document.createElement("p");
@@ -58,9 +59,6 @@ async function fillStoryToBoard(section, story, color) {
     const pNodeEstimatedTime = document.createTextNode('Story Points: ' + story.storyPoints);
     pTaskTime.append(pNodeEstimatedTime);
 
-
-
-
     newDiv.append(pName)
     newDiv.append(pDate)
     newDiv.append(pStatus)
@@ -71,15 +69,13 @@ async function fillStoryToBoard(section, story, color) {
 
     // When the user clicks on the div, open the modal
     newDiv.addEventListener('click', () => {
-        let pName = document.getElementById('p-modal-name')
+        let pName = document.getElementById('p-smodal-name')
         pName.textContent = "Name: " + story.name;
-        let pDate = document.getElementById('p-modal-date')
-        pDate.textContent = "Date: " + story.creationDate;
-        let pStatus = document.getElementById('p-modal-status')
+        let pStatus = document.getElementById('p-smodal-status')
         pStatus.textContent = "Status: " + story.status;
-        let pId = document.getElementById('p-modal-id')
+        let pId = document.getElementById('p-smodal-id')
         pId.textContent = story.userStoryId;
-        let pdesc = document.getElementById('descriptionText')
+        let pdesc = document.getElementById('sdescriptionText')
         pdesc.textContent = story.description;
 
     })
@@ -109,3 +105,37 @@ async function updateStatusStory(story, status) {
     }
     return response;
 }
+
+async function updateTableNewStory() {
+
+    await createNewStory("postUserStory");
+    await fillUserStoryArray().then(loadStories);
+}
+
+async function createNewStory(url) {
+
+
+    let body2 = {
+        name: document.getElementById('sname').value,
+        description: document.getElementById('sdescription').value,
+        status: 'backlog'
+    }
+
+    const fetchOptions = {
+        method: "Post",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(body2)
+    }
+
+    //calls backend and wait for return
+    const response = await fetch(url, fetchOptions);
+
+    if (!response.ok) {
+        console.log("something went wrong")
+    }
+    ;
+}
+
+submitFormButton.addEventListener('click', updateTableNewStory)

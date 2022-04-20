@@ -23,8 +23,8 @@
     <div class="new-task-div col-1" id="new-task-div">
         <div class="row function-row">
             <button class="btn btn-success" id="create-new-task-button" data-bs-toggle="modal"
-                    data-bs-target="#myModal2">
-                Create new task
+                    data-bs-target="#myModal3">
+                Create new story
             </button>
         </div>
     </div>
@@ -35,70 +35,70 @@
 
         <select id="sprint-select" class="form-select" aria-label="Default select example"></select>
 
-        <div class="userStoryDiv container">
+        <div class="userStoryDiv container colscrollbar-x">
             <h1>User Stories</h1>
-            <div draggable="true"  class="story-row colscrollbar-x" id="backlog">
+            <div class="story-row colscrollbar-x" id="backlog">
 
             </div>
 
 
             <div class="story-row colscrollbar-x" id="sprint-backlog">
 
-        </div>
+            </div>
 
 
-        <div class="table-div container" id="table-div">
-            <table>
-                <thead>
-                <tr>
-                   <h2>Task overview</h2>
-                </tr>
-                </thead>
-                <th scope="col">not started</th>
-                <th scope="col">in progress</th>
-                <th scope="col">review</th>
-                <th scope="col">done</th>
-                <tbody>
-                <tr class="rows">
-                    <td id="notstarted" class="notstarted">
-                        <div class="colscrollbar" id="divnotstarted">
+            <div class="table-div container" id="table-div">
+                <table>
+                    <thead>
+                    <tr>
+                        <h2>Task overview</h2>
+                    </tr>
+                    </thead>
+                    <th scope="col">not started</th>
+                    <th scope="col">in progress</th>
+                    <th scope="col">review</th>
+                    <th scope="col">done</th>
+                    <tbody>
+                    <tr class="rows">
+                        <td id="notstarted" class="notstarted">
+                            <div class="colscrollbar" id="divnotstarted">
+                            </div>
+                        </td>
+                        <td id="inprogress" class="inprogress">
+                            <div class="colscrollbar" id="divinprogress">
+                            </div>
+                        </td>
+                        <td id="review" class="review">
+                            <div class="colscrollbar" id="divreview">
+                            </div>
+                        </td>
+                        <td id="done" class="done">
+                            <div class="colscrollbar" id="divdone">
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- The view task Modal -->
+
+            <div id="myModal" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                    </td>
-                    <td id="inprogress" class="inprogress">
-                        <div class="colscrollbar" id="divinprogress">
-                        </div>
-                    </td>
-                    <td id="review" class="review">
-                        <div class="colscrollbar" id="divreview">
-                        </div>
-                    </td>
-                    <td id="done" class="done">
-                        <div class="colscrollbar" id="divdone">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-        <!-- The view task Modal -->
-
-        <div id="myModal" class="modal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="p-modal-name">Some text in the Modal..</p>
-                        <p id="p-modal-date">Some text in the Modal..</p>
-                        <p id="p-modal-status">Some text in the Modal..</p>
-                        <label for="input-time">Time Spent</label><br>
-                        <input id="input-time" type="number"><br>
-                        <p id="p-modal-id" hidden>Some text in the Modal..</p>
-                        <span>
+                        <div class="modal-body">
+                            <p id="p-modal-name">Some text in the Modal..</p>
+                            <p id="p-modal-date">Some text in the Modal..</p>
+                            <p id="p-modal-status">Some text in the Modal..</p>
+                            <label for="input-time">Time Spent</label><br>
+                            <input id="input-time" type="number"><br>
+                            <p id="p-modal-id" hidden>Some text in the Modal..</p>
+                            <span>
                 <label for="dropDownModal">Set Status</label><br>
                 <select class="form-select" aria-label="Default select example" id="dropDownModal">
                     <option value="inprogress">inprogress</option>
@@ -107,67 +107,128 @@
                     <option value="notstarted">notstarted</option>
                 </select>
             </span>
-                        <div id="divUserDropDown">
-                            <label for="dropDownUserTask">Assign to</label><br>
-                            <select id="dropDownUserTask" class="form-select" aria-label="Default select example">
-                            </select>
-                        </div>
-                        <br>
+                            <div id="divUserDropDown">
+                                <label for="dropDownUserTask">Assign to</label><br>
+                                <select id="dropDownUserTask" class="form-select" aria-label="Default select example">
+                                </select>
+                            </div>
+                            <br>
 
-                        <h1>Description</h1>
-                        <div class="divDesc">
-                            <p id="descriptionText"></p>
+                            <h1>Description</h1>
+                            <div class="divDesc">
+                                <p id="descriptionText"></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
+                        <div class="modal-footer">
 
-                        <button class="btn btn-info" type="button" id="setstatus" data-bs-dismiss="modal">Save Changes
-                        </button>
-                        <button id="delete" class="btn btn-secondary" data-bs-dismiss="modal">delete</button>
+                            <button class="btn btn-info" type="button" id="setstatus" data-bs-dismiss="modal">Save
+                                Changes
+                            </button>
+                            <button id="delete" class="btn btn-secondary" data-bs-dismiss="modal">delete</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- The create new task Modal -->
-        <div id="myModal2" class="modal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="p-modal-taskname"></p>
-                        <p id="p-modal-taskdesc">Some text in the Modal..</p>
 
-                        <form id=task-form>
-                            <label for="tname">Task Name:</label><br>
-                            <input type="text" id="tname" name="name"><br>
-                            <label for="testimated-time">Estimated time:</label><br>
-                            <input type="number" id="testimated-time" name="estimatedTime"><br>
+            <!-- The view story Modal -->
 
-                        </form>
-                        <label for="description">Enter text here...</label><br>
-                        <textarea rows="4" cols="50" name="description" id="description"
-                                  form="task-form"></textarea>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-info" form="task-form" id='submitBtn' data-bs-dismiss="modal"
-                                type="submit">
-                            Submit
-                        </button>
+            <div id="myModal4" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">View story</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="p-smodal-name">Some text in the Modal..</p>
+                            <p id="p-smodal-status">Some text in the Modal..</p>
+                            <p id="p-smodal-id" hidden>Some text in the Modal..</p>
+                            <br>
+                            <h3>Description</h3>
+                            <div class="divDesc">
+                                <p id="sdescriptionText"></p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info" type="button" id="updateStory" data-bs-dismiss="modal">Save
+                                Changes
+                            </button>
+                            <button id="deleteStory" class="btn btn-secondary" data-bs-dismiss="modal">delete</button>
+                        </div>
                     </div>
                 </div>
+            </div>
 
+            <!-- The create new Story Modal -->
+            <div id="myModal3" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create new story</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form id=story-form>
+                                <label for="sname">Story Name:</label><br>
+                                <input type="text" id="sname" name="name"><br>
+                            </form>
+                            <label for="description">Enter text here...</label><br>
+                            <textarea rows="4" cols="50" name="description" id="sdescription"
+                                      form="task-form"></textarea>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info" form="task-form" id='storySubmitBtn' data-bs-dismiss="modal"
+                                    type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- The create new task Modal -->
+            <div id="myModal2" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="p-modal-taskname"></p>
+                            <p id="p-modal-taskdesc">Some text in the Modal..</p>
+
+                            <form id=task-form>
+                                <label for="tname">Task Name:</label><br>
+                                <input type="text" id="tname" name="name"><br>
+                                <label for="testimated-time">Estimated time:</label><br>
+                                <input type="number" id="testimated-time" name="estimatedTime"><br>
+
+                            </form>
+                            <label for="description">Enter text here...</label><br>
+                            <textarea rows="4" cols="50" name="description" id="description"
+                                      form="task-form"></textarea>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info" form="task-form" id='submitBtn' data-bs-dismiss="modal"
+                                    type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="js/UserStoryJs.js" defer></script>
-<script src="js/js.js" defer></script>
-<script src="js/modals.js" defer></script>
+    <script src="js/UserStoryJs.js" defer></script>
+    <script src="js/js.js" defer></script>
+    <script src="js/modals.js" defer></script>
 
 
 </body>

@@ -1,5 +1,3 @@
-let dragSrcEl;
-const dropZone = document.getElementById('storyinprogress')
 
 
 function handleDragStart(e) {
