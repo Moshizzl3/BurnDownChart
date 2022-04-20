@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     function handleDrop(e) {
         e.stopPropagation();
-
+        console.log(this.parentNode.id)
         if (dragSrcEl !== this) {
             dragSrcEl.innerHTML = this.innerHTML;
             this.innerHTML = e.dataTransfer.getData('text/html');
