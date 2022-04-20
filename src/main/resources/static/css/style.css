@@ -1,9 +1,12 @@
 table {
     border: 5px solid #333;
     table-layout: auto;
-    width: 1200px;
+  width: 100%;
 }
 
+.myBody{
+    background-color: darkcyan;
+}
 
 td {
     border: 1px solid #333;
@@ -14,9 +17,9 @@ td {
 }
 
 .outerdiv{
-    display: flex;
     margin-top: 50px;
     margin-left: 50px;
+    width: 1200px;
 }
 
 thead,
@@ -26,7 +29,8 @@ tfoot {
 
 }
 .colscrollbar{
-    overflow-y: scroll; height: 500px;;
+    overflow-y: scroll;
+    height: 500px;
     border: 1px solid #333;
 }
 
@@ -36,77 +40,42 @@ tfoot {
     padding: 10px;
 }
 
-/* The Modal (background) */
-.modal{
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+.userStoryDiv {
+    width: 100%;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+    background-color: rgba(0, 255, 0, 0.1)
+}
+.story-row{
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+}
+.story-div{
+    font-size: 15px;
+    border: 1px solid #333;
+    margin: 10px;
+    padding: 10px;
+    opacity: 0.9;
 }
 
-.modal2 {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+.colscrollbar-x{
+    overflow-x: scroll;
+    border: 1px solid #333;
 }
-
-/* Modal Content/Box */
-.modal-content{
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
-    height: 50%;
+.real-outer-div{
+    display: flex;
 }
-.modal-content2 {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
-    height: 50%;
+.new-task-div{
+    margin: 10px;
+    padding: 10px;
 }
-
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+.function-row{
+    margin: 1px;
+    padding: 1px;
 }
-
-.close2{
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-
-.close2:hover,
-.close2:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus{
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+.table-div{
+    background-color: rgba(0, 255, 0, 0.1);
+    border: 1px solid rebeccapurple;
 }

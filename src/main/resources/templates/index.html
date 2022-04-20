@@ -7,118 +7,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="myBody">
 
-<h1 id="header-sprint"></h1>
 
-<div class="outerdiv">
-    <div>
-        <select id="sprint-select">
+<div class="real-outer-div">
 
-        </select>
+    <div class="new-task-div col-1" id="new-task-div">
+        <div class="row function-row">
+            <button class="btn btn-success" id="create-new-task-button" data-bs-toggle="modal"
+                    data-bs-target="#myModal2">
+                Create new task
+            </button>
+        </div>
+        <div class="row">
+            <button class="btn btn-success" id="create-new-task-button" data-bs-toggle="modal"
+                    data-bs-target="#myModal2">
+                Create new task
+            </button>
+        </div>
     </div>
+    <div class="outerdiv container">
 
-    <div class="new-task-div" id="new-task-div">
-        <button class="create-new-task-button" id="create-new-task-button">Create new task</button>
 
-    </div>
-    <div class="table-div" id="table-div">
-        <table>
-            <thead>
-            <tr>
-                <th colspan="4">Overview</th>
-            </tr>
-            </thead>
-            <th>not started</th>
-            <th>in progress</th>
-            <th>review</th>
-            <th>done</th>
-            <tbody>
-            <tr class="rows">
-                <td id="notstarted" class="notstarted">
-                    <div class="colscrollbar" id="divnotstarted">
+        <h1 id="header-sprint"></h1>
+
+        <select id="sprint-select" class="form-select" aria-label="Default select example"></select>
+
+        <div class="userStoryDiv container">
+            <h1>User Stories</h1>
+            <div class="story-row colscrollbar-x">
+                <div class="story-div col-2" id="2322" data-bs-toggle="modal" data-bs-target="#myModal"
+                     style="background-color: rgb(217, 207, 206);"><p>Task Name: blabla </p>
+                    <p>Creation Date: 2022-04-19</p>
+                    <p>Task Status: notstarted</p>
+                </div>
+                <div class="story-div col-2" id="2322" data-bs-toggle="modal" data-bs-target="#myModal"
+                     style="background-color: rgb(217, 207, 206);"><p>Task Name: blabla </p>
+                    <p>Creation Date: 2022-04-19</p>
+                    <p>Task Status: notstarted</p>
+                </div>
+            </div>
+
+
+            <div class="story-row colscrollbar-x">
+                <div class="story-div col-2" id="2322" data-bs-toggle="modal" data-bs-target="#myModal"
+                     style="background-color: rgb(217, 207, 206);"><p>Task Name: blabla </p>
+                    <p>Creation Date: 2022-04-19</p>
+                    <p>Task Status: notstarted</p>
+                </div>
+                <div class="story-div col-2" id="2322" data-bs-toggle="modal" data-bs-target="#myModal"
+                     style="background-color: rgb(217, 207, 206);"><p>Task Name: blabla </p>
+                    <p>Creation Date: 2022-04-19</p>
+                    <p>Task Status: notstarted</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-div table" id="table-div">
+            <table>
+                <thead>
+                <tr>
+                   <h2>Task overview</h2>
+                </tr>
+                </thead>
+                <th scope="col">not started</th>
+                <th scope="col">in progress</th>
+                <th scope="col">review</th>
+                <th scope="col">done</th>
+                <tbody>
+                <tr class="rows">
+                    <td id="notstarted" class="notstarted">
+                        <div class="colscrollbar" id="divnotstarted">
+                        </div>
+                    </td>
+                    <td id="inprogress" class="inprogress">
+                        <div class="colscrollbar" id="divinprogress">
+                        </div>
+                    </td>
+                    <td id="review" class="review">
+                        <div class="colscrollbar" id="divreview">
+                        </div>
+                    </td>
+                    <td id="done" class="done">
+                        <div class="colscrollbar" id="divdone">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- The view task Modal -->
+
+        <div id="myModal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </td>
-                <td id="inprogress" class="inprogress">
-                    <div class="colscrollbar" id="divinprogress">
-                    </div>
-                </td>
-                <td id="review" class="review">
-                    <div class="colscrollbar" id="divreview">
-                    </div>
-                </td>
-                <td id="done" class="done">
-                    <div class="colscrollbar" id="divdone">
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-
-    <!-- The view task Modal -->
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p id="p-modal-name">Some text in the Modal..</p>
-            <p id="p-modal-date">Some text in the Modal..</p>
-            <p id="p-modal-status">Some text in the Modal..</p>
-            <label for="input-time">Time Spent</label><br>
-            <input id="input-time" type="number"><br>
-            <p id="p-modal-id" hidden>Some text in the Modal..</p>
-            <span>
+                    <div class="modal-body">
+                        <p id="p-modal-name">Some text in the Modal..</p>
+                        <p id="p-modal-date">Some text in the Modal..</p>
+                        <p id="p-modal-status">Some text in the Modal..</p>
+                        <label for="input-time">Time Spent</label><br>
+                        <input id="input-time" type="number"><br>
+                        <p id="p-modal-id" hidden>Some text in the Modal..</p>
+                        <span>
                 <label for="dropDownModal">Set Status</label><br>
-                <select id="dropDownModal">
+                <select class="form-select" aria-label="Default select example" id="dropDownModal">
                     <option value="inprogress">inprogress</option>
                     <option value="review">review</option>
                     <option value="done">done</option>
                     <option value="notstarted">notstarted</option>
                 </select>
             </span>
-            <div id="divUserDropDown">
-                <label for="dropDownUserTask">Assign to</label><br>
-                <select id="dropDownUserTask">
-                </select>
-            </div>
-            <br>
-            <button id="setstatus">Save Changes</button>
-            <button id="delete">delete</button>
-            <h1>Description</h1>
-            <div class="divDesc">
-                <p id="descriptionText"></p>
-            </div>
+                        <div id="divUserDropDown">
+                            <label for="dropDownUserTask">Assign to</label><br>
+                            <select id="dropDownUserTask" class="form-select" aria-label="Default select example">
+                            </select>
+                        </div>
+                        <br>
 
+                        <h1>Description</h1>
+                        <div class="divDesc">
+                            <p id="descriptionText"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-info" type="button" id="setstatus" data-bs-dismiss="modal">Save Changes
+                        </button>
+                        <button id="delete" class="btn btn-secondary" data-bs-dismiss="modal">delete</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- The create new task Modal -->
+        <div id="myModal2" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="p-modal-taskname"></p>
+                        <p id="p-modal-taskdesc">Some text in the Modal..</p>
 
+                        <form id=task-form>
+                            <label for="tname">Task Name:</label><br>
+                            <input type="text" id="tname" name="name"><br>
+                            <label for="testimated-time">Estimated time:</label><br>
+                            <input type="number" id="testimated-time" name="estimatedTime"><br>
+
+                        </form>
+                        <label for="description">Enter text here...</label><br>
+                        <textarea rows="4" cols="50" name="description" id="description"
+                                  form="task-form"></textarea>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info" form="task-form" id='submitBtn' data-bs-dismiss="modal"
+                                type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
+</div>
 
-    <!-- The create new task Modal -->
-    <div id="myModaltask" class="modal2">
+<div class="modal2">
 
-        <!-- Modal content -->
-        <div class="modal-content2">
-            <span class="close2">&times;</span>
-            <p id="p-modal-taskname"></p>
-            <p id="p-modal-taskdesc">Some text in the Modal..</p>
-            <span>
-                <form id=task-form>
-                      <label for="tname">Task Name:</label><br>
-                      <input type="text" id="tname" name="name"><br>
-                          <label for="testimated-time">Estimated time:</label><br>
-                      <input type="number" id="testimated-time" name="estimatedTime"><br>
-                      <input id='submitBtn' type="button" value="Submit">
-                </form>
-                 <label for="description">Enter text here...</label><br>
-                 <textarea rows="4" cols="50" name="description" id="description"
-                           form="task-form"></textarea>
-            </span>
-        </div>
+    <!-- Modal content -->
+    <div class="modal-content2">
+
 
     </div>
 
