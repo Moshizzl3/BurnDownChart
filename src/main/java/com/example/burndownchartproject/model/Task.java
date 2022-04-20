@@ -1,6 +1,8 @@
 package com.example.burndownchartproject.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -11,26 +13,12 @@ public class Task {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int taskId;
-
-  @Column
   private String name;
-
-  @Column
   private LocalDate creationDate = LocalDate.now();
-
-  @Column
   private LocalDate completionDate;
-
-  @Column
   private String status = "notstarted";
-
-  @Column
   private String description;
-
-  @Column
   private double timeSpent;
-
-  @Column
   private double estimatedTime;
 
   @ManyToOne
@@ -40,6 +28,11 @@ public class Task {
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
+
+  @ManyToOne
+  @JoinColumn(name = "user_story_id")
+  @JsonBackReference
+  private UserStory userStory;
 
 
   public int getTaskId() {
@@ -123,4 +116,11 @@ public class Task {
     this.completionDate = completionDate;
   }
 
+  public UserStory getUserStory() {
+    return userStory;
+  }
+
+  public void setUserStory(UserStory userStory) {
+    this.userStory = userStory;
+  }
 }
