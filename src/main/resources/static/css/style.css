@@ -1,10 +1,9 @@
 table {
-    border: 5px solid #333;
     table-layout: auto;
-  width: 100%;
+    width: 100%;
 }
 
-.myBody{
+.myBody {
     background-color: darkcyan;
 }
 
@@ -16,7 +15,7 @@ td {
 
 }
 
-.outerdiv{
+.outerdiv {
     margin-top: 50px;
     margin-left: 50px;
     width: 1200px;
@@ -28,13 +27,14 @@ tfoot {
     color: #fff;
 
 }
-.colscrollbar{
+
+.colscrollbar {
     overflow-y: scroll;
     height: 500px;
     border: 1px solid #333;
 }
 
-.taskdiv{
+.taskdiv {
     border: 1px solid #333;
     margin: 10px;
     padding: 10px;
@@ -47,12 +47,14 @@ tfoot {
     padding: 10px;
     background-color: rgba(0, 255, 0, 0.1)
 }
-.story-row{
+
+.story-row {
     display: flex;
     margin: 10px;
     padding: 10px;
 }
-.story-div{
+
+.story-div {
     font-size: 15px;
     border: 1px solid #333;
     margin: 10px;
@@ -60,22 +62,45 @@ tfoot {
     opacity: 0.9;
 }
 
-.colscrollbar-x{
+.colscrollbar-x {
     overflow-x: scroll;
     border: 1px solid #333;
 }
-.real-outer-div{
+
+.real-outer-div {
     display: flex;
 }
-.new-task-div{
+
+.new-task-div {
     margin: 10px;
     padding: 10px;
 }
-.function-row{
+
+.function-row {
     margin: 1px;
     padding: 1px;
 }
-.table-div{
+
+.table-div {
     background-color: rgba(0, 255, 0, 0.1);
-    border: 1px solid rebeccapurple;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+}
+
+.story-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.story.div {
+    border: 3px solid #666;
+    background-color: #ddd;
+    border-radius: .5em;
+    padding: 10px;
+    cursor: move;
+}
+.story-div.over {
+    border: 3px dotted #666;
 }
