@@ -1,6 +1,8 @@
 package com.example.burndownchartproject.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -29,6 +31,7 @@ public class Task {
 
   @ManyToOne
   @JoinColumn(name = "user_story_id")
+  @JsonBackReference
   private UserStory userStory;
 
 

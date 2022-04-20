@@ -27,7 +27,6 @@ public class UserStory {
 
   @OneToMany
   @JoinColumn(name = "user_story_id")
-  @JsonBackReference
   private List<Task> tasks;
 
   public int getUserStoryId() {

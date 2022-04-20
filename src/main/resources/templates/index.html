@@ -37,7 +37,7 @@
 
         <div class="userStoryDiv container">
             <h1>User Stories</h1>
-            <div class="story-row colscrollbar-x" id="notstarted">
+            <div draggable="true"  class="story-row colscrollbar-x" id="storynotstarted">
                 <div draggable="true" class="story-div" id="1" data-bs-toggle="modal" data-bs-target="#myModal"
                      style="background-color: rgb(217, 207, 206);"><p>Task Name: heeej </p>
                     <p>Creation Date: 2022-04-19</p>
@@ -51,7 +51,7 @@
             </div>
 
 
-            <div class="story-row colscrollbar-x" id="inprogress">
+            <div class="story-row colscrollbar-x" id="storyinprogress">
                 <div draggable="true" class="story-div" id="3" data-bs-toggle="modal" data-bs-target="#myModal"
                      style="background-color: rgb(217, 207, 206);"><p>Task Name: blabla </p>
                     <p>Creation Date: 2022-04-19</p>
@@ -184,8 +184,11 @@
         </div>
     </div>
 </div>
-<script src="js/js.js"></script>
-<script src="js/modals.js"></script>
+<script src="js/UserStoryJs.js" defer></script>
+<script src="js/js.js" defer></script>
+<script src="js/modals.js" defer></script>
+
+
 </body>
 
 </html>

@@ -92,9 +92,10 @@ tfoot {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
+    cursor: move;
 }
 
-.story.div {
+.story-div {
     border: 3px solid #666;
     background-color: #ddd;
     border-radius: .5em;
@@ -102,5 +103,9 @@ tfoot {
     cursor: move;
 }
 .story-div.over {
+    border: 3px dotted #666;
+}
+
+.story-row.over {
     border: 3px dotted #666;
 }
