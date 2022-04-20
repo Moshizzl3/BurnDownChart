@@ -39,10 +39,12 @@ async function fillSprintArray() {
 
 async function fillTaskArray() {
     taskArray = [];
-    const taskList = await fetchAllTasks();
-    taskList.forEach((task) => {
-        taskArray.push(task)
-    })
+    await fillUserStoryArray()
+    for (let story of userStoryArray) {
+        for (let task of story.tasks) {
+            taskArray.push(task)
+        }
+    }
 }
 
 async function fillUserArray() {
@@ -76,7 +78,7 @@ async function updateStatusTask(task) {
 }
 
 async function updateTaskStatus(task, input) {
-    if (input === 'done'){
+    if (input === 'done') {
         task.completionDate = new Date().toLocaleDateString('en-CA');
     }
     task.status = input;
@@ -252,7 +254,6 @@ async function updateTableNewTask() {
     await createNewStory("postTask");
     fillTaskArray().then(loadTasks);
 }
-
 
 
 async function updateTaskTime(task, input) {

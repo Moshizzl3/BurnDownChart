@@ -34,6 +34,7 @@ async function fillUserStoryArray() {
     })
 }
 
+
 async function fillStoryToBoard(section, story, color) {
 
     const newDiv = document.createElement("div");
