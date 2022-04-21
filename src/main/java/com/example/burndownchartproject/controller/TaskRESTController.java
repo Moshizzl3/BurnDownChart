@@ -51,7 +51,11 @@ public class TaskRESTController {
     }catch (Exception err){
       return new ResponseEntity<>("Could not delete task by id: " + id, HttpStatus.NOT_FOUND);
     }
+  }
 
+  @GetMapping("tasksByStoryId/{id}")
+  public List<Task> getTaskByStoryId(@PathVariable int id){
+    return taskService.getTaskByStoryId(id);
   }
 }
 

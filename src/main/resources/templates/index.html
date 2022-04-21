@@ -114,6 +114,9 @@
                                 <div class="divDesc">
                                     <p id="sdescriptionText"></p>
                                 </div>
+                                <div id="taskStory">
+
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-info" type="button" id="updateStory" data-bs-dismiss="modal">Save
@@ -198,25 +201,25 @@
                     <h2>Task overview</h2>
                 </tr>
                 </thead>
-                <th scope="col">not started</th>
+                <th scope="col" class>not started</th>
                 <th scope="col">in progress</th>
                 <th scope="col">review</th>
                 <th scope="col">done</th>
                 <tbody>
                 <tr class="rows">
-                    <td id="notstarted" class="notstarted">
-                        <div class="colscrollbar" id="divnotstarted">
+                    <td id="notstarted" class="notstarted taskZone">
+                        <div class="colscrollbar " id="divnotstarted">
                         </div>
                     </td>
-                    <td id="inprogress" class="inprogress">
+                    <td id="inprogress" class="inprogress taskZone">
                         <div class="colscrollbar" id="divinprogress">
                         </div>
                     </td>
-                    <td id="review" class="review">
+                    <td id="review" class="review taskZone">
                         <div class="colscrollbar" id="divreview">
                         </div>
                     </td>
-                    <td id="done" class="done">
+                    <td id="done" class="done taskZone">
                         <div class="colscrollbar" id="divdone">
                         </div>
                     </td>
@@ -232,7 +235,7 @@
 </div>
 <script src="js/UserStoryJs.js" defer></script>
 <script src="js/js.js" defer></script>
-<script src="js/modals.js" defer></script>
+<script src="js/draganddrop.js" defer></script>
 
 </body>
 

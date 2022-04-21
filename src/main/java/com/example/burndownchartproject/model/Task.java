@@ -20,6 +20,8 @@ public class Task {
   private String description;
   private double timeSpent;
   private double estimatedTime;
+  @Column(name = "user_story_id")
+  private int userStoryId;
 
   @ManyToOne
   @JoinColumn(name = "sprint_id")
@@ -30,7 +32,7 @@ public class Task {
   private User user;
 
   @ManyToOne
-  @JoinColumn(name = "user_story_id")
+  @JoinColumn(name = "user_story_id",insertable = false, updatable = false)
   @JsonBackReference
   private UserStory userStory;
 
@@ -122,5 +124,13 @@ public class Task {
 
   public void setUserStory(UserStory userStory) {
     this.userStory = userStory;
+  }
+
+  public int getUserStoryId() {
+    return userStoryId;
+  }
+
+  public void setUserStoryId(int userStoryId) {
+    this.userStoryId = userStoryId;
   }
 }

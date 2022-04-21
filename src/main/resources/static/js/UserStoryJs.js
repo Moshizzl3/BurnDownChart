@@ -2,12 +2,17 @@ const storyNotStarted = document.getElementById('backlog');
 const storyInProgress = document.getElementById('sprint-backlog');
 const submitFormButton = document.getElementById('storySubmitBtn');
 
+
 let userStoryArray = []
 
 fillUserStoryArray().then(loadStories).then(console.log(userStoryArray));
 
 function fetchAllStories() {
     return fetch('getAllUserStories').then(res => res.json())
+}
+
+function fetchAllTasksByStoryId(id) {
+    return fetch('tasksByStoryId/' + id).then(res => res.json())
 }
 
 function loadStories() {
@@ -32,6 +37,7 @@ async function fillUserStoryArray() {
     storyList.forEach((story) => {
         userStoryArray.push(story)
     })
+
 }
 
 
@@ -64,7 +70,7 @@ async function fillStoryToBoard(section, story, color) {
     newDiv.style.backgroundColor = color;
 
     // When the user clicks on the div, open the modal
-    newDiv.addEventListener('click', () => {
+    newDiv.addEventListener('click', async () => {
         let pName = document.getElementById('p-smodal-name')
         pName.textContent = "Name: " + story.name;
         let pStatus = document.getElementById('p-smodal-status')
@@ -73,6 +79,12 @@ async function fillStoryToBoard(section, story, color) {
         pId.textContent = story.userStoryId;
         let pdesc = document.getElementById('sdescriptionText')
         pdesc.textContent = story.description;
+        const modalStoryId = document.getElementById('p-smodal-id');
+        console.log(modalStoryId.textContent)
+        let array = await fetchAllTasksByStoryId(modalStoryId.textContent)
+        let storyTaskDiv = document.getElementById('taskStory')
+        fillTableInStory(array, storyTaskDiv)
+
 
     })
     newDiv.addEventListener('dragstart', handleDragStart);
@@ -130,6 +142,44 @@ async function createNewStory(url) {
         console.log("something went wrong")
     }
     ;
+}
+
+function fillTableInStory(taskTable, newDiv) {
+    newDiv.innerHTML ="";
+    const tbl = document.createElement('table');
+    tbl.style.width = '100%';
+    tbl.style.border = '1px solid black';
+
+    const trHead = tbl.insertRow();
+    let tdHead = trHead.insertCell();
+    tdHead.append("Name")
+    tdHead.style.height = 'auto'
+    tdHead = trHead.insertCell();
+    tdHead.append("Status")
+    tdHead.style.height = 'auto'
+    tdHead = trHead.insertCell();
+    tdHead.append("points")
+    tdHead.style.height = 'auto'
+
+    taskTable.forEach(task => {
+        const tr = tbl.insertRow();
+        let td = tr.insertCell();
+        td.style.height = 'auto'
+        td.append(task.name)
+        td = tr.insertCell()
+        td.style.height = 'auto'
+        td.append(task.status)
+        td = tr.insertCell()
+        td.style.height = 'auto'
+        td.append(task.estimatedTime)
+        td = tr.insertCell()
+        td.style.height = 'auto'
+        td.append(task.taskId)
+    })
+
+newDiv.append(tbl)
+
+    console.log(taskTable);
 }
 
 submitFormButton.addEventListener('click', updateTableNewStory)

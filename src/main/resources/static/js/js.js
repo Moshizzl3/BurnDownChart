@@ -115,6 +115,7 @@ async function fillTaskToBoard(section, task, color) {
     newDiv.setAttribute('id', task.taskId);
     newDiv.setAttribute('data-bs-toggle', 'modal');
     newDiv.setAttribute('data-bs-target', '#myModal')
+    newDiv.setAttribute('draggable', 'true')
 
     const pName = document.createElement("p");
     const pNodeName = document.createTextNode('Task Name: ' + task.name);
@@ -165,6 +166,8 @@ async function fillTaskToBoard(section, task, color) {
         pdesc.textContent = task.description;
 
     })
+
+    newDiv.addEventListener('dragstart', handleDragStart);
 }
 
 

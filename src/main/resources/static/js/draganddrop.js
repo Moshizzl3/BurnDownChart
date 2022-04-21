@@ -1,7 +1,9 @@
 
-
+let dragEleSrc;
 function handleDragStart(e) {
     this.style.opacity = '0.4';
+
+    dragEleSrc = this;
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text', e.target.id);
 }
@@ -9,7 +11,8 @@ function handleDragStart(e) {
 function handleDragEnd(e) {
     this.style.opacity = '1';
 
-    items.forEach(function (item) {
+
+    itemsTasks.forEach(item => {
         item.classList.remove('over');
     });
 }
@@ -28,26 +31,38 @@ function handleDragLeave(e) {
 }
 
 async function handleDrop(e) {
+    e.stopPropagation();
     const getId = e.dataTransfer.getData('text');
     let getStory = userStoryArray.find( story => story.userStoryId == getId);
-    console.log(e.target.id)
-
-    items.forEach(item => {
+    itemsTasks.forEach(item => {
         item.innerHTML = "";
     })
+    if (true == true){
+        //await updateStatusStory(getStory,e.target.id )
+        console.log(e.target.class)
+    }
 
-    await updateStatusStory(getStory,e.target.id )
 
-     fillUserStoryArray().then(loadStories).then(console.log(userStoryArray));
-
+     fillUserStoryArray().then(loadStories);
 }
 
-let items = document.querySelectorAll('.story-row');
+let itemsStory = document.querySelectorAll('.story-row');
 
-items.forEach((item) => {
+itemsStory.forEach((item) => {
     item.addEventListener('dragover', handleDragOver);
     item.addEventListener('dragenter', handleDragEnter);
     item.addEventListener('dragleave', handleDragLeave);
     item.addEventListener('dragend', handleDragEnd);
     item.addEventListener('drop', handleDrop);
 });
+
+let itemsTasks = document.querySelectorAll('.taskZone');
+
+itemsTasks.forEach((item) => {
+    item.addEventListener('dragover', handleDragOver);
+    item.addEventListener('dragenter', handleDragEnter);
+    item.addEventListener('dragleave', handleDragLeave);
+    item.addEventListener('dragend', handleDragEnd);
+    item.addEventListener('drop', handleDrop);
+});
+

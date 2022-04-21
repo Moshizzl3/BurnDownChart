@@ -61,6 +61,7 @@ tfoot {
 
 .story-div {
     min-width: 20%;
+    max-width: 20%;
     font-size: 15px;
     border: 1px solid #333;
     margin: 10px;
@@ -104,10 +105,6 @@ tfoot {
     padding: 10px;
     cursor: move;
 }
-.story-div.over {
-    border: 3px dotted #666;
-}
-
-.story-row.over {
+.over {
     border: 3px dotted #666;
 }
