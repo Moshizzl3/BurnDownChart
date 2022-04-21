@@ -48,10 +48,6 @@ async function fillStoryToBoard(section, story, color) {
     const pNodeName = document.createTextNode('Task Name: ' + story.name);
     pName.append(pNodeName);
 
-    const pDate = document.createElement("p");
-    const pNodeDate = document.createTextNode('Creation Date: ' + story.creationDate);
-    pDate.append(pNodeDate);
-
     const pStatus = document.createElement("p");
     const pNodeStatus = document.createTextNode('Task Status: ' + story.status);
     pStatus.append(pNodeStatus);
@@ -61,7 +57,6 @@ async function fillStoryToBoard(section, story, color) {
     pTaskTime.append(pNodeEstimatedTime);
 
     newDiv.append(pName)
-    newDiv.append(pDate)
     newDiv.append(pStatus)
     newDiv.append(pTaskTime)
     section.append(newDiv)
@@ -114,8 +109,6 @@ async function updateTableNewStory() {
 }
 
 async function createNewStory(url) {
-
-
     let body2 = {
         name: document.getElementById('sname').value,
         description: document.getElementById('sdescription').value,
