@@ -5,8 +5,6 @@ const submitFormButton = document.getElementById('storySubmitBtn');
 
 let userStoryArray = []
 
-fillUserStoryArray().then(loadStories).then(console.log(userStoryArray));
-
 function fetchAllStories() {
     return fetch('getAllUserStories').then(res => res.json())
 }
@@ -16,8 +14,6 @@ function fetchAllTasksByStoryId(id) {
 }
 
 function loadStories() {
-
-
     userStoryArray.forEach(story => {
         if ("backlog" === story.status)
             fillStoryToBoard(storyNotStarted, story, '#d9cfce');

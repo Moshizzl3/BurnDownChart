@@ -14,7 +14,7 @@ let userArray = [];
 
 //load data and fills elements on start and on refresh
 fillSprintArray().then(loadSprints).then(setHeader);
-fillTaskArray().then(loadTasks);
+fillUserStoryArray().then(loadStories).then(console.log(userStoryArray)).then(fillTaskArray).then(loadTasks);
 fillUserArray().then(loadUsers);
 
 function fetchAllTasks() {
@@ -39,7 +39,6 @@ async function fillSprintArray() {
 
 async function fillTaskArray() {
     taskArray = [];
-    await fillUserStoryArray()
     for (let story of userStoryArray) {
         for (let task of story.tasks) {
             taskArray.push(task)
