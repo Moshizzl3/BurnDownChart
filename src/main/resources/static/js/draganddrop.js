@@ -34,11 +34,11 @@ async function handleDrop(e) {
     e.stopPropagation();
     const getId = e.dataTransfer.getData('text');
     let getStory = userStoryArray.find( story => story.userStoryId == getId);
-    itemsTasks.forEach(item => {
+    itemsStory.forEach(item => {
         item.innerHTML = "";
     })
     if (true == true){
-        //await updateStatusStory(getStory,e.target.id )
+        await updateStatusStory(getStory,e.target.id )
         console.log(e.target.class)
     }
 
