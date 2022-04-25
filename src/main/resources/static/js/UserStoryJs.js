@@ -9,10 +9,6 @@ function fetchAllStories() {
     return fetch('getAllUserStories').then(res => res.json())
 }
 
-function fetchAllTasksByStoryId(id) {
-    return fetch('tasksByStoryId/' + id).then(res => res.json())
-}
-
 function loadStories() {
     userStoryArray.forEach(story => {
         if ("backlog" === story.status)
@@ -77,9 +73,8 @@ async function fillStoryToBoard(section, story, color) {
         pdesc.textContent = story.description;
         const modalStoryId = document.getElementById('p-smodal-id');
         console.log(modalStoryId.textContent)
-        let array = await fetchAllTasksByStoryId(modalStoryId.textContent)
         let storyTaskDiv = document.getElementById('taskStory')
-        fillTableInStory(array, storyTaskDiv)
+        fillTableInStory(story.tasks, storyTaskDiv)
 
 
     })
