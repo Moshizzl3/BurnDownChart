@@ -306,7 +306,7 @@ pbButtonDelete.addEventListener('click', onTaskDelete);
 
 sprintDropDown.addEventListener('change', () => {
     clearContent().then(loadTasks).then(setHeader);
-    clearAndLoad().then(loadStories)
+    clearAndLoad();
 });
 
 async function createNewTask(task) {
