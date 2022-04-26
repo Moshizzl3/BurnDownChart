@@ -85,7 +85,9 @@ async function fillStoryToBoard(section, story, color) {
 
 async function updateStatusStory(story, status) {
 
+    const sprint = sprintArray.find(sprint => sprint.sprintId == sprintDropDown.value)
     story.status = status;
+    story.sprint = sprint;
     const urlUpdate = 'userStory/' + story.userStoryId;
 
     const fetchOption = {
