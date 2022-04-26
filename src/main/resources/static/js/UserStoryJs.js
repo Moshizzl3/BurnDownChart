@@ -203,8 +203,8 @@ taskform.addEventListener("submit", (e) => {
         name: formData.get("name"),
         status: "notstarted"
     }
-
     taskform.userstory.tasks.push(task);
+    createNewTask(task)
     let storyTaskDiv = document.getElementById('taskStory');
     fillTableInStory(taskform.userstory, storyTaskDiv);
 })

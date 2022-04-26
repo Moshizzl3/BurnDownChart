@@ -301,4 +301,30 @@ sprintDropDown.addEventListener('change', () => {
     clearContent().then(loadTasks).then(setHeader);
 });
 
+async function createNewTask(task) {
+    const url = "postTask"
+    let body2 = {
+        name: task.name,
+        description: task.description,
+        userStoryId: task.userStoryId,
+        status: 'backlog'
+    }
+
+    const fetchOptions = {
+        method: "Post",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(body2)
+    }
+
+    //calls backend and wait for return
+    const response = await fetch(url, fetchOptions);
+
+    if (!response.ok) {
+        console.log("something went wrong")
+    }
+    ;
+}
+
 console.log(new Date().toLocaleDateString('en-CA'))
