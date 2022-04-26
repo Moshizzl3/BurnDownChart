@@ -11,6 +11,7 @@ function fetchAllStories() {
 }
 
 function loadStories() {
+    clearContentStoryRows();
     userStoryArray.forEach(story => {
         if ("backlog" === story.status)
             fillStoryToBoard(storyNotStarted, story, '#d9cfce');
@@ -34,9 +35,13 @@ async function fillUserStoryArray() {
 
 }
 
+function clearContentStoryRows(){
+    storyNotStarted.innerHTML ="";
+    storyInProgress.innerHTML="";
+}
+
 
 async function fillStoryToBoard(section, story, color) {
-
     const newDiv = document.createElement("div");
     newDiv.classList.add("story-div");
     newDiv.setAttribute('id', story.userStoryId);
@@ -112,6 +117,7 @@ async function updateStatusStory(story, status) {
 async function updateTableNewStory() {
 
     await createNewStory("postUserStory");
+
     await fillUserStoryArray().then(loadStories);
 }
 
@@ -208,7 +214,7 @@ taskform.addEventListener("submit", (e) => {
         description: formData.get("taskDescription"),
         estimatedTime: formData.get("estimatedTime"),
         name: formData.get("name"),
-        status: "notstarted",
+        status: "divnotstarted",
         user: user
     }
     taskform.userstory.tasks.push(task);

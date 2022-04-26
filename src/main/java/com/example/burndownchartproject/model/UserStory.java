@@ -20,7 +20,7 @@ public class UserStory {
   private String description;
   private int storyPoints;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "user_story_id")
   private List<Task> tasks;
 
