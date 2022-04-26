@@ -35,27 +35,32 @@ tfoot {
 }
 
 .taskdiv {
-    border: 1px solid #333;
+
+    border: 3px solid #666;
     margin: 10px;
     padding: 10px;
+    border-radius: .5em;
 }
 
 .userStoryDiv {
     width: 100%;
     height: 550px;
-    border: 1px solid black;
     margin: 10px;
     padding: 10px;
-    background-color: rgba(0, 255, 0, 0.1)
+    background-color: rgba(0, 255, 0, 0.1);
+    border: 3px solid rgba(96, 204, 153, 0.1);
+    border-radius: .5em;
 }
 
 .story-row {
-
+    border: 3px solid rgba(96, 204, 153, 0.1);
+    border-radius: .5em;
     display: flex;
     margin: 10px;
     padding: 10px;
     overflow: auto;
     height: 220px;
+    background-color: rgb(126, 203, 245, 0.1);
 ;
 }
 
@@ -88,8 +93,9 @@ tfoot {
 }
 
 .table-div {
+    border: 3px solid rgba(96, 204, 153, 0.1);
+    border-radius: .5em;
     background-color: rgba(0, 255, 0, 0.1);
-    border: 1px solid black;
     margin: 10px;
     padding: 10px;
 }
@@ -97,13 +103,11 @@ tfoot {
 
 
 .story-div {
-
-
     border: 3px solid #666;
-    background-color: #ddd;
     border-radius: .5em;
     padding: 10px;
     cursor: move;
+    background-color: #ddd;
 }
 .over {
     border: 3px dotted #666;

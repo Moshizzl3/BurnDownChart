@@ -16,8 +16,9 @@ function loadStories() {
             fillStoryToBoard(storyNotStarted, story, '#d9cfce');
 
         else if ("sprint-backlog" === story.status)
-            fillStoryToBoard(storyInProgress, story, '#f5d9a9');
-
+            if (story.sprint.sprintId == sprintDropDown.value){
+                fillStoryToBoard(storyInProgress, story, '#f5d9a9');
+            }
         else {
             console.log("defualt");
         }
@@ -84,7 +85,9 @@ async function fillStoryToBoard(section, story, color) {
 
 async function updateStatusStory(story, status) {
 
+    const sprint = sprintArray.find(sprint => sprint.sprintId == sprintDropDown.value)
     story.status = status;
+    story.sprint = sprint;
     const urlUpdate = 'userStory/' + story.userStoryId;
 
     const fetchOption = {
@@ -196,15 +199,17 @@ submitFormButton.addEventListener('click', updateTableNewStory)
 taskform.addEventListener("submit", (e) => {
     e.preventDefault();
     let formData = new FormData(taskform);
+    const user = userArray.find(user => user.userId == 1)
     let task = {
         userStoryId: taskform.userstory.userStoryId,
         description: formData.get("taskDescription"),
         estimatedTime: formData.get("estimatedTime"),
         name: formData.get("name"),
-        status: "notstarted"
+        status: "notstarted",
+        user: user
     }
-
     taskform.userstory.tasks.push(task);
+    createNewTask(task)
     let storyTaskDiv = document.getElementById('taskStory');
     fillTableInStory(taskform.userstory, storyTaskDiv);
 })

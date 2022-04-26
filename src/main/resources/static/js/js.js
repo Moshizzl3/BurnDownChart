@@ -14,7 +14,7 @@ let userArray = [];
 
 //load data and fills elements on start and on refresh
 fillSprintArray().then(loadSprints).then(setHeader);
-fillUserStoryArray().then(loadStories).then(console.log(userStoryArray)).then(fillTaskArray).then(loadTasks);
+fillUserStoryArray().then(loadStories).then(fillTaskArray).then(loadTasks);
 fillUserArray().then(loadUsers);
 
 function fetchAllTasks() {
@@ -173,26 +173,33 @@ async function fillTaskToBoard(section, task, color) {
 function loadTasks() {
 
 
-    let filteredTasks = taskArray.filter(function (task) {
-        return task.sprint.sprintId == sprintDropDown.value;
+    let filteredStory = userStoryArray.filter(function (story) {
+        return story.sprint.sprintId == sprintDropDown.value;
     });
 
-    filteredTasks.forEach(task1 => {
-        if ("notstarted" === task1.status)
-            fillTaskToBoard(divNotStarted, task1, '#d9cfce');
+    filteredStory.forEach(story => {
 
-        else if ("inprogress" === task1.status)
-            fillTaskToBoard(divInProgress, task1, '#f5d9a9');
+        if (story.status == 'sprint-backlog') {
+            story.tasks.forEach(task1 => {
+                if ("divnotstarted" === task1.status)
+                    fillTaskToBoard(divNotStarted, task1, '#d9cfce');
 
-        else if ("review" === task1.status)
-            fillTaskToBoard(divReview, task1, '#84f0ca');
+                else if ("divinprogress" === task1.status)
+                    fillTaskToBoard(divInProgress, task1, '#f5d9a9');
 
-        else if ("done" === task1.status)
-            fillTaskToBoard(divDone, task1, '#62f075');
+                else if ("divreview" === task1.status)
+                    fillTaskToBoard(divReview, task1, '#84f0ca');
 
-        else {
-            console.log("defualt");
+                else if ("divdone" === task1.status)
+                    fillTaskToBoard(divDone, task1, '#62f075');
+
+                else {
+                    console.log("defualt");
+                }
+
+            })
         }
+
     })
 }
 
@@ -299,6 +306,34 @@ pbButtonDelete.addEventListener('click', onTaskDelete);
 
 sprintDropDown.addEventListener('change', () => {
     clearContent().then(loadTasks).then(setHeader);
+    clearAndLoad().then(loadStories)
 });
+
+async function createNewTask(task) {
+    const url = "postTask"
+    let body2 = {
+        name: task.name,
+        description: task.description,
+        userStoryId: task.userStoryId,
+        status: 'notstarted',
+        user: task.user
+    }
+
+    const fetchOptions = {
+        method: "Post",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(body2)
+    }
+
+    //calls backend and wait for return
+    const response = await fetch(url, fetchOptions);
+
+    if (!response.ok) {
+        console.log("something went wrong")
+    }
+    ;
+}
 
 console.log(new Date().toLocaleDateString('en-CA'))
