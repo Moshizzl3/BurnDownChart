@@ -51,6 +51,8 @@ async function handleDrop(e) {
         clearAndLoad()
         console.log(userStoryArray)
         let update = updateStatusStory(getStory, e.target.id)
+
+        clearContent().then(loadTasks);
         reloadUserStory(update);
     }
 }

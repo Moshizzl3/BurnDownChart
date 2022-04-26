@@ -16,8 +16,9 @@ function loadStories() {
             fillStoryToBoard(storyNotStarted, story, '#d9cfce');
 
         else if ("sprint-backlog" === story.status)
-            fillStoryToBoard(storyInProgress, story, '#f5d9a9');
-
+            if (story.sprint.sprintId == sprintDropDown.value){
+                fillStoryToBoard(storyInProgress, story, '#f5d9a9');
+            }
         else {
             console.log("defualt");
         }

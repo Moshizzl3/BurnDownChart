@@ -3,12 +3,7 @@ package com.example.burndownchartproject.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.apache.catalina.LifecycleState;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,6 +23,10 @@ public class UserStory {
   @OneToMany
   @JoinColumn(name = "user_story_id")
   private List<Task> tasks;
+
+  @ManyToOne
+  @JoinColumn(name = "sprint_id")
+  private Sprint sprint;
 
   public int getUserStoryId() {
     return userStoryId;
@@ -87,5 +86,13 @@ public class UserStory {
 
   public void setTasks(List<Task> tasks) {
     this.tasks = tasks;
+  }
+
+  public Sprint getSprint() {
+    return sprint;
+  }
+
+  public void setSprint(Sprint sprint) {
+    this.sprint = sprint;
   }
 }
