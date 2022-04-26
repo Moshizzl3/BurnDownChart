@@ -315,7 +315,7 @@ async function createNewTask(task) {
         name: task.name,
         description: task.description,
         userStoryId: task.userStoryId,
-        status: 'notstarted',
+        status: 'divnotstarted',
         user: task.user
     }
 
