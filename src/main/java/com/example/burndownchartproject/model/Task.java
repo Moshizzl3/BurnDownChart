@@ -24,10 +24,6 @@ public class Task {
   private int userStoryId;
 
   @ManyToOne
-  @JoinColumn(name = "sprint_id")
-  private Sprint sprint;
-
-  @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
 
@@ -79,15 +75,6 @@ public class Task {
 
   public void setTimeSpent(double timeSpent) {
     this.timeSpent = timeSpent;
-  }
-
-
-  public Sprint getSprint() {
-    return sprint;
-  }
-
-  public void setSprint(Sprint sprint) {
-    this.sprint = sprint;
   }
 
   public User getUser() {

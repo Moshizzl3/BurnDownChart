@@ -315,7 +315,8 @@ async function createNewTask(task) {
         name: task.name,
         description: task.description,
         userStoryId: task.userStoryId,
-        status: 'backlog'
+        status: 'notstarted',
+        user: task.user
     }
 
     const fetchOptions = {

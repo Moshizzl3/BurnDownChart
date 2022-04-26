@@ -199,12 +199,14 @@ submitFormButton.addEventListener('click', updateTableNewStory)
 taskform.addEventListener("submit", (e) => {
     e.preventDefault();
     let formData = new FormData(taskform);
+    const user = userArray.find(user => user.userId == 1)
     let task = {
         userStoryId: taskform.userstory.userStoryId,
         description: formData.get("taskDescription"),
         estimatedTime: formData.get("estimatedTime"),
         name: formData.get("name"),
-        status: "notstarted"
+        status: "notstarted",
+        user: user
     }
     taskform.userstory.tasks.push(task);
     createNewTask(task)
