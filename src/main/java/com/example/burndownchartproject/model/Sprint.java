@@ -24,11 +24,6 @@ public class Sprint {
   @Column
   private LocalDate endDate;
 
-  @OneToMany
-  @JoinColumn(name = "sprint_id")
-  @JsonBackReference
-  private Set<Task> taskSet = new HashSet<>();
-
   public int getSprintId() {
     return sprintId;
   }
@@ -45,9 +40,6 @@ public class Sprint {
     return endDate;
   }
 
-  public Set<Task> getTaskSet() {
-    return taskSet;
-  }
 
   public void setSprintName(String sprintName) {
     this.sprintName = sprintName;
@@ -61,7 +53,4 @@ public class Sprint {
     this.endDate = endDate;
   }
 
-  public void setTaskSet(Set<Task> taskSet) {
-    this.taskSet = taskSet;
-  }
 }

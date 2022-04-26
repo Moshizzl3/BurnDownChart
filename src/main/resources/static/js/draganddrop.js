@@ -57,6 +57,28 @@ async function handleDrop(e) {
     }
 }
 
+async function handleDropTask(e) {
+    e.stopPropagation();
+    const getId = e.dataTransfer.getData('text');
+    let getTask = taskArray.find(task => task.taskId == getId);
+    firstList = itemsTasks.item(0);
+    secondList = itemsTasks.item(1);
+    if (true == true) {
+        if (firstList.contains(dragEleSrc)) {
+            console.log("contains1")
+            getTask.status = e.target.id
+            dragEleSrc.status = e.target.id
+        } else {
+            console.log("contains2")
+        }
+        clearAndLoad()
+        console.log(taskArray)
+      await updateTaskStatus(getTask, e.target.id)
+
+        clearContent().then(loadTasks);
+    }
+}
+
 async function reloadUserStory(update) {
     await update;
     await fillUserStoryArray();
@@ -98,6 +120,6 @@ itemsTasks.forEach((item) => {
     item.addEventListener('dragenter', handleDragEnter);
     item.addEventListener('dragleave', handleDragLeave);
     item.addEventListener('dragend', handleDragEnd);
-    item.addEventListener('drop', handleDrop);
+    item.addEventListener('drop', handleDropTask);
 });
 

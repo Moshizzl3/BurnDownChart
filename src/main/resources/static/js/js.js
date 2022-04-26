@@ -181,16 +181,16 @@ function loadTasks() {
 
         if (story.status == 'sprint-backlog') {
             story.tasks.forEach(task1 => {
-                if ("notstarted" === task1.status)
+                if ("divnotstarted" === task1.status)
                     fillTaskToBoard(divNotStarted, task1, '#d9cfce');
 
-                else if ("inprogress" === task1.status)
+                else if ("divinprogress" === task1.status)
                     fillTaskToBoard(divInProgress, task1, '#f5d9a9');
 
-                else if ("review" === task1.status)
+                else if ("divreview" === task1.status)
                     fillTaskToBoard(divReview, task1, '#84f0ca');
 
-                else if ("done" === task1.status)
+                else if ("divdone" === task1.status)
                     fillTaskToBoard(divDone, task1, '#62f075');
 
                 else {

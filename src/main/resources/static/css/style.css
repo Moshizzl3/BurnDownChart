@@ -45,10 +45,11 @@ tfoot {
 .userStoryDiv {
     width: 100%;
     height: 550px;
-    border: 1px solid black;
     margin: 10px;
     padding: 10px;
-    background-color: rgba(0, 255, 0, 0.1)
+    background-color: rgba(0, 255, 0, 0.1);
+    border: 3px solid rgba(96, 204, 153, 0.1);
+    border-radius: .5em;
 }
 
 .story-row {
@@ -92,8 +93,9 @@ tfoot {
 }
 
 .table-div {
+    border: 3px solid rgba(96, 204, 153, 0.1);
+    border-radius: .5em;
     background-color: rgba(0, 255, 0, 0.1);
-    border: 1px solid black;
     margin: 10px;
     padding: 10px;
 }
