@@ -1,16 +1,13 @@
 const storyNotStarted = document.getElementById('backlog');
 const storyInProgress = document.getElementById('sprint-backlog');
 const submitFormButton = document.getElementById('storySubmitBtn');
-
+const taskform = document.getElementById("task-form");
+const updateStoryButton = document.getElementById("updateStory");
 
 let userStoryArray = []
 
 function fetchAllStories() {
     return fetch('getAllUserStories').then(res => res.json())
-}
-
-function fetchAllTasksByStoryId(id) {
-    return fetch('tasksByStoryId/' + id).then(res => res.json())
 }
 
 function loadStories() {
@@ -77,9 +74,8 @@ async function fillStoryToBoard(section, story, color) {
         pdesc.textContent = story.description;
         const modalStoryId = document.getElementById('p-smodal-id');
         console.log(modalStoryId.textContent)
-        let array = await fetchAllTasksByStoryId(modalStoryId.textContent)
         let storyTaskDiv = document.getElementById('taskStory')
-        fillTableInStory(array, storyTaskDiv)
+        fillTableInStory(story, storyTaskDiv)
 
 
     })
@@ -140,8 +136,9 @@ async function createNewStory(url) {
     ;
 }
 
-function fillTableInStory(taskTable, newDiv) {
-    newDiv.innerHTML ="";
+function fillTableInStory(story, newDiv) {
+    let taskTable = story.tasks;
+    newDiv.innerHTML = "";
     const tbl = document.createElement('table');
     tbl.style.width = '100%';
     tbl.style.border = '1px solid black';
@@ -173,9 +170,41 @@ function fillTableInStory(taskTable, newDiv) {
         td.append(task.taskId)
     })
 
-newDiv.append(tbl)
+    const button = document.createElement("button");
+    button.classList.add("btn", "btn-success", "mt-2");
+    button.textContent = "Create new task";
+    button.setAttribute('data-bs-toggle', 'modal');
+    button.setAttribute('data-bs-target', '#myModal2')
+
+    button.addEventListener("click", () => {
+        taskform.reset();
+        taskform.userstory = story;
+        let title = document.getElementById("p-modal-storytitle");
+        title.textContent = "Create new task for " + story.name + "[" + story.userStoryId + "]";
+    })
+
+    newDiv.append(tbl);
+    newDiv.append(button);
 
     console.log(taskTable);
+    updateStoryButton.addEventListener('click', () => updateStatusStory(story, story.status))
 }
 
 submitFormButton.addEventListener('click', updateTableNewStory)
+
+
+taskform.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let formData = new FormData(taskform);
+    let task = {
+        userStoryId: taskform.userstory.userStoryId,
+        description: formData.get("taskDescription"),
+        estimatedTime: formData.get("estimatedTime"),
+        name: formData.get("name"),
+        status: "notstarted"
+    }
+
+    taskform.userstory.tasks.push(task);
+    let storyTaskDiv = document.getElementById('taskStory');
+    fillTableInStory(taskform.userstory, storyTaskDiv);
+})
