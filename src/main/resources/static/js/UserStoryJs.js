@@ -119,7 +119,10 @@ async function createNewStory(url) {
     let body2 = {
         name: document.getElementById('sname').value,
         description: document.getElementById('sdescription').value,
-        status: 'backlog'
+        status: 'backlog',
+        sprint: {
+            sprintId:1
+        }
     }
 
     const fetchOptions = {
