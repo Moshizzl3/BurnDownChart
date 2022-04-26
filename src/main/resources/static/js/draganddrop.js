@@ -53,7 +53,7 @@ async function handleDrop(e) {
         let update = updateStatusStory(getStory, e.target.id)
 
         clearContent().then(loadTasks);
-        reloadUserStory(update);
+        await reloadUserStory(update);
     }
 }
 
@@ -65,7 +65,7 @@ async function handleDropTask(e) {
     secondList = itemsTasks.item(1);
     if (true == true) {
         if (firstList.contains(dragEleSrc)) {
-            console.log("contains1")
+            console.log(e.target.id)
             getTask.status = e.target.id
             dragEleSrc.status = e.target.id
         } else {
@@ -73,9 +73,10 @@ async function handleDropTask(e) {
         }
         clearAndLoad()
         console.log(taskArray)
+        clearContent().then(loadTasks);
       await updateTaskStatus(getTask, e.target.id)
 
-        clearContent().then(loadTasks);
+
     }
 }
 

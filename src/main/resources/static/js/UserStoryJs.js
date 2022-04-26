@@ -11,6 +11,7 @@ function fetchAllStories() {
 }
 
 function loadStories() {
+    clearContentStoryRows();
     userStoryArray.forEach(story => {
         if ("backlog" === story.status)
             fillStoryToBoard(storyNotStarted, story, '#d9cfce');
@@ -34,9 +35,13 @@ async function fillUserStoryArray() {
 
 }
 
+function clearContentStoryRows(){
+    storyNotStarted.innerHTML ="";
+    storyInProgress.innerHTML="";
+}
+
 
 async function fillStoryToBoard(section, story, color) {
-
     const newDiv = document.createElement("div");
     newDiv.classList.add("story-div");
     newDiv.setAttribute('id', story.userStoryId);
@@ -89,13 +94,17 @@ async function updateStatusStory(story, status) {
     story.status = status;
     story.sprint = sprint;
     const urlUpdate = 'userStory/' + story.userStoryId;
+    let body = {
+        userStoryId:2,
+        storyPints: 10
+    }
 
     const fetchOption = {
         method: "PUT",
         headers: {
             "Content-type": "application/json"
         },
-        body: ""
+        body: JSON.stringify(body)
     }
 
     const jsonString = JSON.stringify(story);
@@ -112,6 +121,7 @@ async function updateStatusStory(story, status) {
 async function updateTableNewStory() {
 
     await createNewStory("postUserStory");
+
     await fillUserStoryArray().then(loadStories);
 }
 
@@ -193,7 +203,7 @@ function fillTableInStory(story, newDiv) {
     newDiv.append(button);
 
     console.log(taskTable);
-    updateStoryButton.addEventListener('click', () => updateStatusStory(story, story.status))
+    updateStoryButton.addEventListener('click', () => clearContent().then(loadTasks))
 }
 
 submitFormButton.addEventListener('click', updateTableNewStory)
@@ -208,11 +218,13 @@ taskform.addEventListener("submit", (e) => {
         description: formData.get("taskDescription"),
         estimatedTime: formData.get("estimatedTime"),
         name: formData.get("name"),
-        status: "notstarted",
+        status: "divnotstarted",
         user: user
     }
     taskform.userstory.tasks.push(task);
-    createNewTask(task)
+    console.log(taskArray)
+    createNewTask(task).then(fillTaskArray)
     let storyTaskDiv = document.getElementById('taskStory');
     fillTableInStory(taskform.userstory, storyTaskDiv);
+
 })
