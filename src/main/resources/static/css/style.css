@@ -35,9 +35,11 @@ tfoot {
 }
 
 .taskdiv {
-    border: 1px solid #333;
+
+    border: 3px solid #666;
     margin: 10px;
     padding: 10px;
+    border-radius: .5em;
 }
 
 .userStoryDiv {
@@ -50,12 +52,14 @@ tfoot {
 }
 
 .story-row {
-
+    border: 3px solid rgba(96, 204, 153, 0.1);
+    border-radius: .5em;
     display: flex;
     margin: 10px;
     padding: 10px;
     overflow: auto;
     height: 220px;
+    background-color: rgb(126, 203, 245, 0.1);
 ;
 }
 
@@ -97,13 +101,11 @@ tfoot {
 
 
 .story-div {
-
-
     border: 3px solid #666;
-    background-color: #ddd;
     border-radius: .5em;
     padding: 10px;
     cursor: move;
+    background-color: #ddd;
 }
 .over {
     border: 3px dotted #666;
