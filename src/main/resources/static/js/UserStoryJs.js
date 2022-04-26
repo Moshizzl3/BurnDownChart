@@ -223,7 +223,7 @@ taskform.addEventListener("submit", (e) => {
     }
     taskform.userstory.tasks.push(task);
     console.log(taskArray)
-    createNewTask(task).then(fillTaskArray)
+    createNewTask(task).then(fillUserStoryArray).then(fillTaskArray)
     let storyTaskDiv = document.getElementById('taskStory');
     fillTableInStory(taskform.userstory, storyTaskDiv);
 
