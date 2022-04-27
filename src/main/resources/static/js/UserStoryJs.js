@@ -11,18 +11,18 @@ function fetchAllStories() {
 }
 
 function loadStories() {
+    console.log(userStoryArray)
     clearContentStoryRows();
     userStoryArray.forEach(story => {
         if ("backlog" === story.status)
             fillStoryToBoard(storyNotStarted, story, '#d9cfce');
 
         else if ("sprint-backlog" === story.status)
-            if (story.sprint.sprintId == sprintDropDown.value){
+            if (story.sprint.sprintId == sprintDropDown.value) {
                 fillStoryToBoard(storyInProgress, story, '#f5d9a9');
+            } else {
+                console.log("defualt");
             }
-        else {
-            console.log("defualt");
-        }
     })
 }
 
@@ -35,9 +35,9 @@ async function fillUserStoryArray() {
 
 }
 
-function clearContentStoryRows(){
-    storyNotStarted.innerHTML ="";
-    storyInProgress.innerHTML="";
+function clearContentStoryRows() {
+    storyNotStarted.innerHTML = "";
+    storyInProgress.innerHTML = "";
 }
 
 
@@ -56,6 +56,7 @@ async function fillStoryToBoard(section, story, color) {
     const pStatus = document.createElement("p");
     const pNodeStatus = document.createTextNode('Story Status: ' + story.status);
     pStatus.append(pNodeStatus);
+
 
     const pTaskTime = document.createElement("p");
     const pNodeEstimatedTime = document.createTextNode('Story Points: ' + story.storyPoints);
@@ -94,8 +95,34 @@ async function updateStatusStory(story, status) {
     story.sprint = sprint;
     const urlUpdate = 'userStory/' + story.userStoryId;
     let body = {
-        userStoryId:2,
+        userStoryId: 2,
         storyPints: 10
+    }
+
+    const fetchOption = {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(body)
+    }
+
+    const jsonString = JSON.stringify(story);
+    fetchOption.body = jsonString;
+
+    //call backend and wait for response
+    const response = await fetch(urlUpdate, fetchOption);
+    if (!response.ok) {
+    }
+    return response;
+}
+
+async function updateStoryPoints(story) {
+
+    const urlUpdate = 'userStory/' + story.userStoryId;
+    let body = {
+        userStoryId: story.userStoryId,
+        storyPoints: story.storyPoints
     }
 
     const fetchOption = {
@@ -129,7 +156,7 @@ async function createNewStory(url) {
         description: document.getElementById('sdescription').value,
         status: 'backlog',
         sprint: {
-            sprintId:1
+            sprintId: 1
         }
     }
 
@@ -199,7 +226,16 @@ function fillTableInStory(story, newDiv) {
     newDiv.append(tbl);
     newDiv.append(button);
 
-    updateStoryButton.addEventListener('click', () => clearContent().then(loadTasks))
+    updateStoryButton.addEventListener('click',async () => {
+
+        let points = 0;
+        story.tasks.forEach(task => points += Number(task.estimatedTime))
+        story.storyPoints = points;
+
+        clearContent().then(loadTasks);
+
+        await reloadUserStory(updateStoryPoints(story))
+    })
 }
 
 submitFormButton.addEventListener('click', updateTableNewStory)
@@ -218,8 +254,7 @@ taskform.addEventListener("submit", (e) => {
         user: user
     }
     taskform.userstory.tasks.push(task);
-    createNewTask(task).then(fillUserStoryArray).then(fillTaskArray)
+    createNewTask(task).then(fillUserStoryArray).then(fillTaskArray);
     let storyTaskDiv = document.getElementById('taskStory');
     fillTableInStory(taskform.userstory, storyTaskDiv);
-
 })

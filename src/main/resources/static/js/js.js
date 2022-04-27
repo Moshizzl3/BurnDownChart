@@ -316,7 +316,8 @@ async function createNewTask(task) {
         description: task.description,
         userStoryId: task.userStoryId,
         status: 'divnotstarted',
-        user: task.user
+        user: task.user,
+        estimatedTime: task.estimatedTime
     }
 
     const fetchOptions = {
