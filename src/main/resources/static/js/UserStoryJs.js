@@ -50,11 +50,11 @@ async function fillStoryToBoard(section, story, color) {
     newDiv.setAttribute('draggable', 'true')
 
     const pName = document.createElement("p");
-    const pNodeName = document.createTextNode('Task Name: ' + story.name);
+    const pNodeName = document.createTextNode('Story Name: ' + story.name);
     pName.append(pNodeName);
 
     const pStatus = document.createElement("p");
-    const pNodeStatus = document.createTextNode('Task Status: ' + story.status);
+    const pNodeStatus = document.createTextNode('Story Status: ' + story.status);
     pStatus.append(pNodeStatus);
 
     const pTaskTime = document.createElement("p");
