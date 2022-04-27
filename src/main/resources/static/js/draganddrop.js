@@ -32,17 +32,12 @@ function handleDragLeave(e) {
 
 async function handleDrop(e) {
     e.stopPropagation();
-    if (document.querySelector(".userStoryDiv").contains(e.target)) {
+    if (document.querySelector(".userStoryDiv").contains(e.target) && document.querySelector(".userStoryDiv").contains(dragEleSrc)) {
         const getId = e.dataTransfer.getData('text');
         let getStory = userStoryArray.find(story => story.userStoryId == getId);
         let backlogList = itemsStory.item(0);
         let sprintList = itemsStory.item(1);
-        let currentPosition;
-        if (getStory.status == "backlog") {
-            currentPosition = backlogList;
-        } else if (getStory.status == "sprint-backlog") {
-            currentPosition = sprintList;
-        }
+        let currentPosition = dragEleSrc.closest(".story-row");
 
         if (e.target !== currentPosition) {
             let success = false;
@@ -73,29 +68,35 @@ async function handleDrop(e) {
 
 async function handleDropTask(e) {
     e.stopPropagation();
-    if (document.getElementById("table-div").contains(e.target)) {
+    if (document.getElementById("table-div").contains(e.target) && document.getElementById("table-div").contains(dragEleSrc)) {
+        let target = e.target.closest(".colscrollbar");
         const getId = e.dataTransfer.getData('text');
         let getTask = taskArray.find(task => task.taskId == getId);
-        let notStartedList = itemsTasks.item(0);
-        let inProgressList = itemsTasks.item(1);
-        let reviewList = itemsTasks.item(2);
-        let doneList = itemsTasks.item(3);
-        if (true == true) {
-            if (notStartedList.contains(dragEleSrc)) {
-                getTask.status = e.target.id
-                dragEleSrc.status = e.target.id
-            } else {
-
+        let currentPosition = dragEleSrc.closest(".colscrollbar");
+        if (target !== currentPosition) {
+            if (isWithinScope(target, itemsTasks)) {
+                getTask.status = "div" + target.id
+                dragEleSrc.status = "div" + target.id
+                clearAndLoad()
+                clearContent().then(loadTasks);
+                await updateTaskStatus(getTask, target.id)
             }
-            clearAndLoad()
-            clearContent().then(loadTasks);
-            await updateTaskStatus(getTask, e.target.id)
-
-
+        } else {
+            clearAndLoad();
         }
     } else {
         clearAndLoad();
     }
+}
+
+function isWithinScope(target, list) {
+    let result = false;
+    list.forEach((element) => {
+        if (element.contains(target)) {
+            result = true;
+        }
+    })
+    return result;
 }
 
 async function reloadUserStory(update) {
