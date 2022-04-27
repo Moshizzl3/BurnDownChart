@@ -94,17 +94,13 @@ async function updateStatusStory(story, status) {
     story.status = status;
     story.sprint = sprint;
     const urlUpdate = 'userStory/' + story.userStoryId;
-    let body = {
-        userStoryId: 2,
-        storyPints: 10
-    }
 
     const fetchOption = {
         method: "PUT",
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify(body)
+        body: ""
     }
 
     const jsonString = JSON.stringify(story);
@@ -120,17 +116,12 @@ async function updateStatusStory(story, status) {
 async function updateStoryPoints(story) {
 
     const urlUpdate = 'userStory/' + story.userStoryId;
-    let body = {
-        userStoryId: story.userStoryId,
-        storyPoints: story.storyPoints
-    }
-
     const fetchOption = {
         method: "PUT",
         headers: {
             "Content-type": "application/json"
         },
-        body: JSON.stringify(body)
+        body: ""
     }
 
     const jsonString = JSON.stringify(story);
