@@ -32,44 +32,71 @@ function handleDragLeave(e) {
 
 async function handleDrop(e) {
     e.stopPropagation();
-    const getId = e.dataTransfer.getData('text');
-    let getStory = userStoryArray.find(story => story.userStoryId == getId);
-    firstList = itemsStory.item(0);
-    secondList = itemsStory.item(1);
-    if (true == true) {
-        if (firstList.contains(dragEleSrc)) {
-            getStory.status = "sprint-backlog"
-            dragEleSrc.status = "spring-backlog";
-        } else {
-            getStory.status = "backlog";
-            dragEleSrc.status = "backlog";
-        }
-        clearAndLoad()
-        let update = updateStatusStory(getStory, e.target.id)
+    if (document.querySelector(".userStoryDiv").contains(e.target) && document.querySelector(".userStoryDiv").contains(dragEleSrc)) {
+        const getId = e.dataTransfer.getData('text');
+        let getStory = userStoryArray.find(story => story.userStoryId == getId);
+        let backlogList = itemsStory.item(0);
+        let sprintList = itemsStory.item(1);
+        let currentPosition = dragEleSrc.closest(".story-row");
 
-        clearContent().then(loadTasks);
-        await reloadUserStory(update);
+        if (e.target !== currentPosition) {
+            let success = false;
+            if (e.target === backlogList) {
+                getStory.status = "backlog";
+                dragEleSrc.status = "backlog";
+                success = true
+            } else if (e.target === sprintList) {
+                getStory.status = "sprint-backlog"
+                dragEleSrc.status = "spring-backlog";
+                success = true;
+            }
+            if (success) {
+
+                clearAndLoad()
+                let update = updateStatusStory(getStory, e.target.id)
+
+                clearContent().then(loadTasks);
+                await reloadUserStory(update);
+            } else {
+                clearAndLoad()
+            }
+        }
+    } else {
+        clearAndLoad();
     }
 }
 
 async function handleDropTask(e) {
     e.stopPropagation();
-    const getId = e.dataTransfer.getData('text');
-    let getTask = taskArray.find(task => task.taskId == getId);
-    firstList = itemsTasks.item(0);
-    secondList = itemsTasks.item(1);
-    if (true == true) {
-        if (firstList.contains(dragEleSrc)) {
-            getTask.status = e.target.id
-            dragEleSrc.status = e.target.id
+    if (document.getElementById("table-div").contains(e.target) && document.getElementById("table-div").contains(dragEleSrc)) {
+        let target = e.target.closest(".colscrollbar");
+        const getId = e.dataTransfer.getData('text');
+        let getTask = taskArray.find(task => task.taskId == getId);
+        let currentPosition = dragEleSrc.closest(".colscrollbar");
+        if (target !== currentPosition) {
+            if (isWithinScope(target, itemsTasks)) {
+                getTask.status = "div" + target.id
+                dragEleSrc.status = "div" + target.id
+                clearAndLoad()
+                clearContent().then(loadTasks);
+                await updateTaskStatus(getTask, target.id)
+            }
         } else {
+            clearAndLoad();
         }
-        clearAndLoad()
-        clearContent().then(loadTasks);
-      await updateTaskStatus(getTask, e.target.id)
-
-
+    } else {
+        clearAndLoad();
     }
+}
+
+function isWithinScope(target, list) {
+    let result = false;
+    list.forEach((element) => {
+        if (element.contains(target)) {
+            result = true;
+        }
+    })
+    return result;
 }
 
 async function reloadUserStory(update) {
