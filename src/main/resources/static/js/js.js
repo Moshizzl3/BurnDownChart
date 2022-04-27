@@ -165,6 +165,11 @@ async function fillTaskToBoard(section, task, color) {
     })
 
     newDiv.addEventListener('dragstart', handleDragStart);
+    newDiv.addEventListener('dragover', handleDragOver);
+    newDiv.addEventListener('dragenter', handleDragEnter);
+    newDiv.addEventListener('dragleave', handleDragLeave);
+    newDiv.addEventListener('dragend', handleDragEnd);
+    newDiv.addEventListener('drop', handleDropTask);
 }
 
 
