@@ -105,7 +105,7 @@ async function deleteTask(task) {
 }
 
 
-async function fillTaskToBoard(section, task, color) {
+async function fillTaskToBoard(section, task, story, color) {
 
     const newDiv = document.createElement("div");
     newDiv.classList.add("taskdiv");
@@ -119,7 +119,7 @@ async function fillTaskToBoard(section, task, color) {
     pName.append(pNodeName);
 
     const pDate = document.createElement("p");
-    const pNodeDate = document.createTextNode('Creation Date: ' + task.creationDate);
+    const pNodeDate = document.createTextNode('Story: ' + story.name);
     pDate.append(pNodeDate);
 
     const pStatus = document.createElement("p");
@@ -131,13 +131,8 @@ async function fillTaskToBoard(section, task, color) {
     pAssignedTo.append(pNodeAssignedTo);
     const pTaskTime = document.createElement("p");
 
-    if (section != divDone) {
-        const pNodeEstimatedTime = document.createTextNode('Estimated time: ' + task.estimatedTime);
-        pTaskTime.append(pNodeEstimatedTime);
-    } else {
-        const pNodeEstimatedTime = document.createTextNode('Time spent: ' + task.timeSpent);
-        pTaskTime.append(pNodeEstimatedTime);
-    }
+    const pNodeEstimatedTime = document.createTextNode('Story Points: ' + task.estimatedTime);
+    pTaskTime.append(pNodeEstimatedTime);
 
 
     newDiv.append(pName)
@@ -154,7 +149,7 @@ async function fillTaskToBoard(section, task, color) {
         let pName = document.getElementById('p-modal-name')
         pName.textContent = "Name: " + task.name;
         let pDate = document.getElementById('p-modal-date')
-        pDate.textContent = "Date: " + task.creationDate;
+        pDate.textContent = "Story: " + story.name;
         let pStatus = document.getElementById('p-modal-status')
         pStatus.textContent = "Status: " + task.status;
         let pId = document.getElementById('p-modal-id')
@@ -185,13 +180,13 @@ function loadTasks() {
         if (story.status == 'sprint-backlog') {
             story.tasks.forEach(task1 => {
                 if ("divnotstarted" === task1.status)
-                    fillTaskToBoard(divNotStarted, task1, '#d9cfce');
+                    fillTaskToBoard(divNotStarted, task1, story, '#d9cfce');
 
                 else if ("divinprogress" === task1.status)
-                    fillTaskToBoard(divInProgress, task1, '#f5d9a9');
+                    fillTaskToBoard(divInProgress, task1, story, '#f5d9a9');
 
                 else if ("divreview" === task1.status)
-                    fillTaskToBoard(divReview, task1, '#84f0ca');
+                    fillTaskToBoard(divReview, task1, story, '#84f0ca');
 
                 else if ("divdone" === task1.status)
                     fillTaskToBoard(divDone, task1, '#62f075');
@@ -237,14 +232,16 @@ async function changeStatusOnTask() {
     let getTask = taskArray.find(task => task.taskId == getTaskId);
     let taskStatus = document.getElementById("dropDownModal").value;
     let taskTime = document.getElementById("input-time").value;
-
-    await clearContent();
-
+    let findUser = userArray.find(user => user.userId == userDropDown.value)
+    getTask.user = findUser;
+    getTask.status = taskStatus;
+    console.log(findUser)
+    clearContent().then(fillTaskArray).then(loadTasks);
     await updateTaskAssignedTo(getTask, userDropDown.value)
     await updateTaskTime(getTask, taskTime);
     await updateTaskStatus(getTask, taskStatus)
-    await fillTaskArray
-    fillTaskArray().then(loadTasks);
+
+
 }
 
 async function onTaskDelete() {
