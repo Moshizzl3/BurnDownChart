@@ -31,25 +31,20 @@ function handleDragLeave(e) {
 }
 
 async function handleDrop(e) {
-    console.log(userStoryArray)
     e.stopPropagation();
     const getId = e.dataTransfer.getData('text');
     let getStory = userStoryArray.find(story => story.userStoryId == getId);
     firstList = itemsStory.item(0);
     secondList = itemsStory.item(1);
     if (true == true) {
-        console.log(e.target.class)
         if (firstList.contains(dragEleSrc)) {
-            console.log("contains1")
             getStory.status = "sprint-backlog"
             dragEleSrc.status = "spring-backlog";
         } else {
-            console.log("contains2")
             getStory.status = "backlog";
             dragEleSrc.status = "backlog";
         }
         clearAndLoad()
-        console.log(userStoryArray)
         let update = updateStatusStory(getStory, e.target.id)
 
         clearContent().then(loadTasks);
@@ -65,14 +60,11 @@ async function handleDropTask(e) {
     secondList = itemsTasks.item(1);
     if (true == true) {
         if (firstList.contains(dragEleSrc)) {
-            console.log(e.target.id)
             getTask.status = e.target.id
             dragEleSrc.status = e.target.id
         } else {
-            console.log("contains2")
         }
         clearAndLoad()
-        console.log(taskArray)
         clearContent().then(loadTasks);
       await updateTaskStatus(getTask, e.target.id)
 
@@ -92,7 +84,6 @@ function clearAndLoad() {
     itemsStory.forEach(item => {
         item.innerHTML = ''
     });
-    console.log("We did it!")
 
     loadStories();
 }
@@ -101,7 +92,6 @@ async function clearUserStories() {
     itemsStory.forEach(item => {
         item.innerHTML = ''
     });
-    console.log("We did it!")
 }
 
 let itemsStory = document.querySelectorAll('.story-row');

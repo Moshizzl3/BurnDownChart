@@ -71,7 +71,6 @@ async function updateStatusTask(task) {
     //call backend and wait for response
     const response = await fetch(urlUpdate, fetchOption);
     if (!response.ok) {
-        console.log("shiiit, gik sq ikk")
     }
     return response;
 }
@@ -101,7 +100,6 @@ async function deleteTask(task) {
     //call backend and wait for response
     const response = await fetch(urlDelete, fetchOption);
     if (!response.ok) {
-        console.log("shiiit, gik sq ikk")
     }
     return response;
 }
@@ -331,9 +329,6 @@ async function createNewTask(task) {
     const response = await fetch(url, fetchOptions);
 
     if (!response.ok) {
-        console.log("something went wrong")
     }
     ;
 }
-
-console.log(new Date().toLocaleDateString('en-CA'))

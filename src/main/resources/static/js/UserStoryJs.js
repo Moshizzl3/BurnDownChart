@@ -79,7 +79,6 @@ async function fillStoryToBoard(section, story, color) {
         let pdesc = document.getElementById('sdescriptionText')
         pdesc.textContent = story.description;
         const modalStoryId = document.getElementById('p-smodal-id');
-        console.log(modalStoryId.textContent)
         let storyTaskDiv = document.getElementById('taskStory')
         fillTableInStory(story, storyTaskDiv)
 
@@ -113,7 +112,6 @@ async function updateStatusStory(story, status) {
     //call backend and wait for response
     const response = await fetch(urlUpdate, fetchOption);
     if (!response.ok) {
-        console.log("shiiit, gik sq ikk")
     }
     return response;
 }
@@ -147,7 +145,6 @@ async function createNewStory(url) {
     const response = await fetch(url, fetchOptions);
 
     if (!response.ok) {
-        console.log("something went wrong")
     }
     ;
 }
@@ -202,7 +199,6 @@ function fillTableInStory(story, newDiv) {
     newDiv.append(tbl);
     newDiv.append(button);
 
-    console.log(taskTable);
     updateStoryButton.addEventListener('click', () => clearContent().then(loadTasks))
 }
 
@@ -222,7 +218,6 @@ taskform.addEventListener("submit", (e) => {
         user: user
     }
     taskform.userstory.tasks.push(task);
-    console.log(taskArray)
     createNewTask(task).then(fillUserStoryArray).then(fillTaskArray)
     let storyTaskDiv = document.getElementById('taskStory');
     fillTableInStory(taskform.userstory, storyTaskDiv);
