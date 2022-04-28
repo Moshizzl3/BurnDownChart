@@ -98,9 +98,14 @@ async function fillStoryToBoard(section, story, color) {
         const modalStoryId = document.getElementById('p-smodal-id');
         let storyTaskDiv = document.getElementById('taskStory')
         fillTableInStory(story, storyTaskDiv)
+        pdesc.addEventListener('input', function() {
+            console.log('An edit input has been detected');
+            console.log(pdesc.innerHTML);
+        });
 
-
+        updateStoryButton.addEventListener('click', () => updateDescStory(story, pdesc.innerHTML))
     })
+
     newDiv.addEventListener('dragstart', handleDragStart);
 }
 
@@ -166,6 +171,30 @@ async function updateStatusStory(story, status) {
     const sprint = sprintArray.find(sprint => sprint.sprintId == sprintDropDown.value)
     story.status = status;
     story.sprint = sprint;
+    const urlUpdate = 'userStory/' + story.userStoryId;
+
+    const fetchOption = {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: ""
+    }
+
+    const jsonString = JSON.stringify(story);
+    fetchOption.body = jsonString;
+
+    //call backend and wait for response
+    const response = await fetch(urlUpdate, fetchOption);
+    if (!response.ok) {
+    }
+    return response;
+}
+async function updateDescStory(story, desc) {
+
+    story.description = desc;
+    console.log(story)
+
     const urlUpdate = 'userStory/' + story.userStoryId;
 
     const fetchOption = {
@@ -299,8 +328,6 @@ function fillTableInStory(story, newDiv) {
 
     updateStoryButton.removeEventListener('click', () => fuckobongo(story))
     updateStoryButton.addEventListener('click', () => fuckobongo(story))
-
-
 }
 
 async function fuckobongo(story) {
