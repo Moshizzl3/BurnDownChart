@@ -236,11 +236,11 @@ async function changeStatusOnTask() {
     getTask.user = findUser;
     getTask.status = taskStatus;
     console.log(findUser)
-    clearContent().then(fillTaskArray).then(loadTasks);
+    clearContent().then(fillTaskArray).then(loadTasks)
+
     await updateTaskAssignedTo(getTask, userDropDown.value)
     await updateTaskTime(getTask, taskTime);
     await updateTaskStatus(getTask, taskStatus)
-
 
 }
 
@@ -301,7 +301,7 @@ async function clearContent() {
 
 //Event listeners
 
-pbButtonStatus.addEventListener('click', changeStatusOnTask);
+pbButtonStatus.addEventListener('click', () => changeStatusOnTask);
 pbButtonDelete.addEventListener('click', onTaskDelete);
 
 sprintDropDown.addEventListener('change', () => {

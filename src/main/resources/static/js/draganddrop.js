@@ -15,6 +15,7 @@ function handleDragEnd(e) {
     itemsTasks.forEach(item => {
         item.classList.remove('over');
     });
+    loadStories();
 }
 
 function handleDragOver(e) {

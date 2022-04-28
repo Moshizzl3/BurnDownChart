@@ -57,17 +57,27 @@ async function fillStoryToBoard(section, story, color) {
     const pNodeName = document.createTextNode('Story Name: ' + story.name);
     pName.append(pNodeName);
 
-    const pStatus = document.createElement("p");
-    const pNodeStatus = document.createTextNode('Story Status: ' + story.status);
-    pStatus.append(pNodeStatus);
-
-
     const pTaskTime = document.createElement("p");
     const pNodeEstimatedTime = document.createTextNode('Story Points: ' + story.storyPoints);
     pTaskTime.append(pNodeEstimatedTime);
 
+    const progressDiv = document.createElement('div')
+    progressDiv.style.width = '100%'
+    progressDiv.style.height = '50px'
+    const progressText = document.createElement("label");
+    const progressTextNode = document.createTextNode('progress:');
+    progressText.append(progressTextNode);
+    progressDiv.append(progressText)
+
+    const progressDivPercent = document.createElement('div')
+    progressDiv.append(progressDivPercent)
+    progressDivPercent.style.backgroundColor = 'red'
+    progressDivPercent.style.height = '10%'
+    fillProgressBar(story, progressDivPercent)
+
+
+    newDiv.append(progressDiv)
     newDiv.append(pName)
-    newDiv.append(pStatus)
     newDiv.append(pTaskTime)
     section.append(newDiv)
 
@@ -90,6 +100,27 @@ async function fillStoryToBoard(section, story, color) {
 
     })
     newDiv.addEventListener('dragstart', handleDragStart);
+}
+
+function fillProgressBar(story, div) {
+    let points = 0;
+    const newStory = userStoryArray.find(s => s.userStoryId == story.userStoryId)
+    newStory.tasks.forEach((task) => {
+        if (task.status == 'divdone') {
+            points += task.estimatedTime
+        }
+    })
+    const newWidth = (points / story.storyPoints) * 100
+    if (newWidth > 30) {
+        div.style.backgroundColor = 'orange'
+    }  if (newWidth > 60) {
+        div.style.backgroundColor = 'yellow'
+    }
+     if (newWidth > 80) {
+        div.style.backgroundColor = 'green'
+    }
+    div.style.width = newWidth + '%'
+    console.log(newWidth)
 }
 
 async function updateStatusStory(story, status) {
@@ -221,18 +252,19 @@ function fillTableInStory(story, newDiv) {
     newDiv.append(tbl);
     newDiv.append(button);
 
-    //updateStoryButton.removeEventListener('click', () => fuckobongo(story));
+    updateStoryButton.removeEventListener('click', () => fuckobongo(story))
     updateStoryButton.addEventListener('click', () => fuckobongo(story))
+
+
 }
 
-async function fuckobongo(story){
+async function fuckobongo(story) {
 
     let points = 0;
     story.tasks.forEach(task => points += Number(task.estimatedTime))
     story.storyPoints = points;
 
     clearContent().then(loadTasks);
-    clearAndLoad()
 
     await reloadUserStory(updateStoryPoints(story))
 }
