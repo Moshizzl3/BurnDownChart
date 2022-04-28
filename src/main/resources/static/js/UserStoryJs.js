@@ -48,6 +48,7 @@ function clearContentStoryRows() {
 async function fillStoryToBoard(section, story, color) {
     const newDiv = document.createElement("div");
     newDiv.classList.add("story-div");
+    newDiv.classList.add("story-div");
     newDiv.setAttribute('id', story.userStoryId);
     newDiv.setAttribute('data-bs-toggle', 'modal');
     newDiv.setAttribute('data-bs-target', '#myModal4')
@@ -82,6 +83,7 @@ async function fillStoryToBoard(section, story, color) {
     section.append(newDiv)
 
     newDiv.style.backgroundColor = color;
+    checkStoryDone(story, newDiv)
 
     // When the user clicks on the div, open the modal
     newDiv.addEventListener('click', async () => {
@@ -100,6 +102,23 @@ async function fillStoryToBoard(section, story, color) {
 
     })
     newDiv.addEventListener('dragstart', handleDragStart);
+}
+
+function checkStoryDone(story, div) {
+    let points = 0;
+    const newStory = userStoryArray.find(s => s.userStoryId == story.userStoryId)
+    newStory.tasks.forEach((task) => {
+        if (task.status == 'divdone') {
+            points += task.estimatedTime
+        }
+    })
+    let calcPercent = Math.round(( (points / story.storyPoints) * 100) *100)/100;
+
+    if (calcPercent == 100){
+        div.style.backgroundColor = 'rgba(55, 191, 55,1)'
+        console.log(calcPercent)
+    }
+
 }
 
 function fillProgressBar(story, div) {
