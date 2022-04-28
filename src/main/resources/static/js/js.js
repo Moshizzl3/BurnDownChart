@@ -154,6 +154,8 @@ async function fillTaskToBoard(section, task, story, color) {
         pStatus.textContent = "Status: " + task.status;
         let pId = document.getElementById('p-modal-id')
         pId.textContent = task.taskId;
+        let pIdStory = document.getElementById('p-storyId-modal-id')
+        pIdStory.textContent = story.userStoryId;
         let pdesc = document.getElementById('descriptionText')
         pdesc.textContent = task.description;
 
@@ -305,9 +307,20 @@ pbButtonDelete.addEventListener('click', async () => {
         console.log("hi")
         userStoryArray.push(story)
     })
-    console.log(userStoryArray)
+    const getStory = document.getElementById('p-storyId-modal-id').textContent
+    const story = userStoryArray.find(story => story.userStoryId == getStory);
 
+    let points = 0;
+    story.tasks.forEach(task => points += Number(task.estimatedTime))
+    story.storyPoints = points;
+
+
+    console.log(userStoryArray)
+    console.log(getStory)
     clearContent().then(loadTasks)
+    clearAndLoad()
+    await updateStoryPoints(story)
+
 });
 
 sprintDropDown.addEventListener('change', () => {
