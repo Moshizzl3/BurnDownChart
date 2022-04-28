@@ -141,7 +141,7 @@ async function fillTaskToBoard(section, task, story, color) {
     newDiv.append(pAssignedTo)
     newDiv.append(pTaskTime)
     section.append(newDiv)
-
+    newDiv.style.backgroundColor = 'rgba(55, 191, 55,0.7)'
     newDiv.style.backgroundColor = color;
 
     // When the user clicks on the div, open the modal
@@ -191,12 +191,7 @@ async function loadTasks() {
                     fillTaskToBoard(divReview, task1, story, '#84f0ca');
 
                 else if ("divdone" === task1.status)
-                    fillTaskToBoard(divDone, task1, '#62f075');
-
-                else {
-                    console.log("defualt");
-                }
-
+                    fillTaskToBoard(divDone, task1, 'green)');
             })
         }
 
