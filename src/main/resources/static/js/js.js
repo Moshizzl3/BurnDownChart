@@ -141,7 +141,7 @@ async function fillTaskToBoard(section, task, story, color) {
     newDiv.append(pAssignedTo)
     newDiv.append(pTaskTime)
     section.append(newDiv)
-
+    newDiv.style.backgroundColor = 'rgba(55, 191, 55,0.7)'
     newDiv.style.backgroundColor = color;
 
     // When the user clicks on the div, open the modal
@@ -154,6 +154,8 @@ async function fillTaskToBoard(section, task, story, color) {
         pStatus.textContent = "Status: " + task.status;
         let pId = document.getElementById('p-modal-id')
         pId.textContent = task.taskId;
+        let pIdStory = document.getElementById('p-storyId-modal-id')
+        pIdStory.textContent = story.userStoryId;
         let pdesc = document.getElementById('descriptionText')
         pdesc.textContent = task.description;
 
@@ -189,12 +191,7 @@ async function loadTasks() {
                     fillTaskToBoard(divReview, task1, story, '#84f0ca');
 
                 else if ("divdone" === task1.status)
-                    fillTaskToBoard(divDone, task1, '#62f075');
-
-                else {
-                    console.log("defualt");
-                }
-
+                    fillTaskToBoard(divDone, task1, 'green)');
             })
         }
 
@@ -227,7 +224,7 @@ function loadUsers() {
 }
 
 async function changeStatusOnTask() {
-
+    console.log("heeeeej")
     let getTaskId = document.getElementById('p-modal-id').textContent;
     let getTask = taskArray.find(task => task.taskId == getTaskId);
     let taskStatus = document.getElementById("dropDownModal").value;
@@ -239,7 +236,7 @@ async function changeStatusOnTask() {
     clearContent().then(fillTaskArray).then(loadTasks)
 
     await updateTaskAssignedTo(getTask, userDropDown.value)
-    await updateTaskTime(getTask, taskTime);
+    await updateTaskTime(getTask, (Number(taskTime) + getTask.timeSpent));
     await updateTaskStatus(getTask, taskStatus)
 
 }
@@ -296,7 +293,9 @@ async function clearContent() {
 
 //Event listeners
 
-pbButtonStatus.addEventListener('click', () => changeStatusOnTask);
+pbButtonStatus.addEventListener('click', async () => {
+    await changeStatusOnTask()
+});
 pbButtonDelete.addEventListener('click', async () => {
     await onTaskDelete()
     let storyList = await fetchAllStories();
@@ -305,9 +304,20 @@ pbButtonDelete.addEventListener('click', async () => {
         console.log("hi")
         userStoryArray.push(story)
     })
-    console.log(userStoryArray)
+    const getStory = document.getElementById('p-storyId-modal-id').textContent
+    const story = userStoryArray.find(story => story.userStoryId == getStory);
 
+    let points = 0;
+    story.tasks.forEach(task => points += Number(task.estimatedTime))
+    story.storyPoints = points;
+
+
+    console.log(userStoryArray)
+    console.log(getStory)
     clearContent().then(loadTasks)
+    clearAndLoad()
+    await updateStoryPoints(story)
+
 });
 
 sprintDropDown.addEventListener('change', () => {

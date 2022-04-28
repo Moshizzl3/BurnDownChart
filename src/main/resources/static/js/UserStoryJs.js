@@ -48,6 +48,7 @@ function clearContentStoryRows() {
 async function fillStoryToBoard(section, story, color) {
     const newDiv = document.createElement("div");
     newDiv.classList.add("story-div");
+    newDiv.classList.add("story-div");
     newDiv.setAttribute('id', story.userStoryId);
     newDiv.setAttribute('data-bs-toggle', 'modal');
     newDiv.setAttribute('data-bs-target', '#myModal4')
@@ -82,6 +83,7 @@ async function fillStoryToBoard(section, story, color) {
     section.append(newDiv)
 
     newDiv.style.backgroundColor = color;
+    checkStoryDone(story, newDiv)
 
     // When the user clicks on the div, open the modal
     newDiv.addEventListener('click', async () => {
@@ -96,10 +98,32 @@ async function fillStoryToBoard(section, story, color) {
         const modalStoryId = document.getElementById('p-smodal-id');
         let storyTaskDiv = document.getElementById('taskStory')
         fillTableInStory(story, storyTaskDiv)
+        pdesc.addEventListener('input', function() {
+            console.log('An edit input has been detected');
+            console.log(pdesc.innerHTML);
+        });
 
-
+        updateStoryButton.addEventListener('click', () => updateDescStory(story, pdesc.innerHTML))
     })
+
     newDiv.addEventListener('dragstart', handleDragStart);
+}
+
+function checkStoryDone(story, div) {
+    let points = 0;
+    const newStory = userStoryArray.find(s => s.userStoryId == story.userStoryId)
+    newStory.tasks.forEach((task) => {
+        if (task.status == 'divdone') {
+            points += task.estimatedTime
+        }
+    })
+    let calcPercent = Math.round(( (points / story.storyPoints) * 100) *100)/100;
+
+    if (calcPercent == 100){
+        div.style.backgroundColor = 'rgba(55, 191, 55,1)'
+        console.log(calcPercent)
+    }
+
 }
 
 function fillProgressBar(story, div) {
@@ -147,6 +171,30 @@ async function updateStatusStory(story, status) {
     const sprint = sprintArray.find(sprint => sprint.sprintId == sprintDropDown.value)
     story.status = status;
     story.sprint = sprint;
+    const urlUpdate = 'userStory/' + story.userStoryId;
+
+    const fetchOption = {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: ""
+    }
+
+    const jsonString = JSON.stringify(story);
+    fetchOption.body = jsonString;
+
+    //call backend and wait for response
+    const response = await fetch(urlUpdate, fetchOption);
+    if (!response.ok) {
+    }
+    return response;
+}
+async function updateDescStory(story, desc) {
+
+    story.description = desc;
+    console.log(story)
+
     const urlUpdate = 'userStory/' + story.userStoryId;
 
     const fetchOption = {
@@ -280,8 +328,6 @@ function fillTableInStory(story, newDiv) {
 
     updateStoryButton.removeEventListener('click', () => fuckobongo(story))
     updateStoryButton.addEventListener('click', () => fuckobongo(story))
-
-
 }
 
 async function fuckobongo(story) {
