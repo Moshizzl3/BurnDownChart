@@ -229,7 +229,7 @@ function loadUsers() {
 }
 
 async function changeStatusOnTask() {
-
+    console.log("heeeeej")
     let getTaskId = document.getElementById('p-modal-id').textContent;
     let getTask = taskArray.find(task => task.taskId == getTaskId);
     let taskStatus = document.getElementById("dropDownModal").value;
@@ -241,7 +241,7 @@ async function changeStatusOnTask() {
     clearContent().then(fillTaskArray).then(loadTasks)
 
     await updateTaskAssignedTo(getTask, userDropDown.value)
-    await updateTaskTime(getTask, taskTime);
+    await updateTaskTime(getTask, (Number(taskTime) + getTask.timeSpent));
     await updateTaskStatus(getTask, taskStatus)
 
 }
@@ -298,7 +298,9 @@ async function clearContent() {
 
 //Event listeners
 
-pbButtonStatus.addEventListener('click', () => changeStatusOnTask);
+pbButtonStatus.addEventListener('click', async () => {
+    await changeStatusOnTask()
+});
 pbButtonDelete.addEventListener('click', async () => {
     await onTaskDelete()
     let storyList = await fetchAllStories();
