@@ -5,6 +5,7 @@ const taskform = document.getElementById("task-form");
 const updateStoryButton = document.getElementById("updateStory");
 
 let userStoryArray = []
+let queue;
 
 function fetchAllStories() {
     return fetch('getAllUserStories').then(res => res.json())
@@ -28,11 +29,14 @@ function loadStories() {
 
 async function fillUserStoryArray() {
     userStoryArray = [];
-    const storyList = await fetchAllStories();
+    let storyList;
+    if (!(queue instanceof Promise)) {
+        queue = fetchAllStories();
+    }
+    storyList = await queue;
     storyList.forEach((story) => {
         userStoryArray.push(story)
     })
-
 }
 
 function clearContentStoryRows() {
@@ -217,17 +221,22 @@ function fillTableInStory(story, newDiv) {
     newDiv.append(tbl);
     newDiv.append(button);
 
-    updateStoryButton.addEventListener('click',async () => {
-
-        let points = 0;
-        story.tasks.forEach(task => points += Number(task.estimatedTime))
-        story.storyPoints = points;
-
-        clearContent().then(loadTasks);
-
-        await reloadUserStory(updateStoryPoints(story))
-    })
+    //updateStoryButton.removeEventListener('click', () => fuckobongo(story));
+    updateStoryButton.addEventListener('click', () => fuckobongo(story))
 }
+
+async function fuckobongo(story){
+
+    let points = 0;
+    story.tasks.forEach(task => points += Number(task.estimatedTime))
+    story.storyPoints = points;
+
+    clearContent().then(loadTasks);
+    clearAndLoad()
+
+    await reloadUserStory(updateStoryPoints(story))
+}
+
 
 submitFormButton.addEventListener('click', updateTableNewStory)
 
