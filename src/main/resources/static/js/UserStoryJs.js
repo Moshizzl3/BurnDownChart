@@ -71,8 +71,8 @@ async function fillStoryToBoard(section, story, color) {
 
     const progressDivPercent = document.createElement('div')
     progressDiv.append(progressDivPercent)
-    progressDivPercent.style.backgroundColor = 'red'
-    progressDivPercent.style.height = '10%'
+    progressDivPercent.style.backgroundColor = 'rgba(194, 104, 212,0.5)'
+    progressDivPercent.style.height = '50%'
     fillProgressBar(story, progressDivPercent)
 
 
@@ -104,23 +104,42 @@ async function fillStoryToBoard(section, story, color) {
 
 function fillProgressBar(story, div) {
     let points = 0;
+    div.style.width = '0%';
+    const newDiv = document.createElement('div');
+    const pTag = document.createElement('p');
+    div.style.whiteSpace = 'nowrap'
+
+
     const newStory = userStoryArray.find(s => s.userStoryId == story.userStoryId)
     newStory.tasks.forEach((task) => {
         if (task.status == 'divdone') {
             points += task.estimatedTime
         }
     })
-    const newWidth = (points / story.storyPoints) * 100
+
+
+   let newWidth = Math.round(( (points / story.storyPoints) * 100) *100)/100;
+
     if (newWidth > 30) {
-        div.style.backgroundColor = 'orange'
-    }  if (newWidth > 60) {
-        div.style.backgroundColor = 'yellow'
+        div.style.backgroundColor = 'rgba(249, 141, 51 ,0.5)'
     }
-     if (newWidth > 80) {
-        div.style.backgroundColor = 'green'
+    if (newWidth > 60) {
+        div.style.backgroundColor = 'rgba(45, 243, 246 ,0.5)'
+    }
+    if (newWidth > 80) {
+        div.style.backgroundColor = 'rgba(55, 191, 55,0.5)'
     }
     div.style.width = newWidth + '%'
-    console.log(newWidth)
+   let  pTagNode = document.createTextNode(0 + '%')
+    if (newWidth > 0) {
+        pTagNode= document.createTextNode(newWidth + '% - storypoints: ' +points + '/' + story.storyPoints);
+    }
+
+    pTag.append(pTagNode);
+    newDiv.append(pTag);
+    div.append(newDiv);
+
+
 }
 
 async function updateStatusStory(story, status) {
@@ -173,7 +192,14 @@ async function updateTableNewStory() {
 
     await createNewStory("postUserStory");
 
-    await fillUserStoryArray().then(loadStories);
+    let storyList = await fetchAllStories();
+    userStoryArray = []
+    storyList.forEach(story => {
+        console.log("hi")
+        userStoryArray.push(story)
+    })
+
+    loadStories()
 }
 
 async function createNewStory(url) {
