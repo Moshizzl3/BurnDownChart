@@ -168,7 +168,7 @@ async function fillTaskToBoard(section, task, story, color) {
 }
 
 
-function loadTasks() {
+async function loadTasks() {
 
 
     let filteredStory = userStoryArray.filter(function (story) {
@@ -248,13 +248,8 @@ async function onTaskDelete() {
 
     let getTaskId = document.getElementById('p-modal-id').textContent;
     let getTask = taskArray.find(task => task.taskId == getTaskId);
+    await deleteTask(getTask)
 
-    await clearContent();
-
-    deleteTask(getTask)
-        .then(() => taskArray = [])
-        .then(fillTaskArray)
-        .then(loadTasks)
 }
 
 async function updateTableNewTask() {
@@ -302,7 +297,18 @@ async function clearContent() {
 //Event listeners
 
 pbButtonStatus.addEventListener('click', () => changeStatusOnTask);
-pbButtonDelete.addEventListener('click', onTaskDelete);
+pbButtonDelete.addEventListener('click', async () => {
+    await onTaskDelete()
+    let storyList = await fetchAllStories();
+    userStoryArray = []
+    storyList.forEach(story => {
+        console.log("hi")
+        userStoryArray.push(story)
+    })
+    console.log(userStoryArray)
+
+    clearContent().then(loadTasks)
+});
 
 sprintDropDown.addEventListener('change', () => {
     clearContent().then(loadTasks).then(setHeader);
