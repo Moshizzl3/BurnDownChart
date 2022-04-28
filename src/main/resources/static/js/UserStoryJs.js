@@ -221,11 +221,13 @@ function fillTableInStory(story, newDiv) {
     newDiv.append(tbl);
     newDiv.append(button);
 
-    //updateStoryButton.removeEventListener('click', () => fuckobongo(story));
-    updateStoryButton.addEventListener('click', () => fuckobongo(story))
+    updateStoryButton.removeEventListener('click', fuckobongo(story))
+    updateStoryButton.addEventListener('click', fuckobongo(story))
+
+
 }
 
-async function fuckobongo(story){
+async function fuckobongo(story) {
 
     let points = 0;
     story.tasks.forEach(task => points += Number(task.estimatedTime))
