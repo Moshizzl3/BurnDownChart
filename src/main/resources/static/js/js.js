@@ -228,16 +228,17 @@ async function changeStatusOnTask() {
     let getTaskId = document.getElementById('p-modal-id').textContent;
     let getTask = taskArray.find(task => task.taskId == getTaskId);
     let taskStatus = document.getElementById("dropDownModal").value;
+    let taskDesc = document.getElementById("descriptionText").textContent;
     let taskTime = document.getElementById("input-time").value;
     let findUser = userArray.find(user => user.userId == userDropDown.value)
     getTask.user = findUser;
     getTask.status = taskStatus;
+    getTask.description = taskDesc;
+    getTask.timeSpent = taskTime
     console.log(findUser)
     clearContent().then(fillTaskArray).then(loadTasks)
 
-    await updateTaskAssignedTo(getTask, userDropDown.value)
-    await updateTaskTime(getTask, (Number(taskTime) + getTask.timeSpent));
-    await updateTaskStatus(getTask, taskStatus)
+    await updateStatusTask(getTask)
 
 }
 

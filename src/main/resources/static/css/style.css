@@ -52,7 +52,7 @@ tfoot {
     border-radius: .5em;
 }
 
-.story-row {
+.back-log {
     border: 3px solid rgba(96, 204, 153, 0.1);
     border-radius: .5em;
     display: flex;
@@ -60,8 +60,19 @@ tfoot {
     padding: 10px;
     overflow: auto;
     height: 220px;
-    background-color: rgb(126, 203, 245, 0.1);
-;
+    background-color: rgb(226, 217, 221 , 0.5);
+}
+
+
+.sprint-back-log {
+    border: 3px solid rgba(96, 204, 153, 0.1);
+    border-radius: .5em;
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    overflow: auto;
+    height: 220px;
+    background-color: rgb(126, 207, 232, 0.5);
 }
 
 .story-div {
