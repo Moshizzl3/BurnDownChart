@@ -76,7 +76,7 @@ async function updateStatusTask(task) {
 }
 
 async function updateTaskStatus(task, input) {
-    if (input === 'done') {
+    if (input === 'divdone') {
         task.completionDate = new Date().toLocaleDateString('en-CA');
     }
     task.status = input;
@@ -191,7 +191,7 @@ async function loadTasks() {
                     fillTaskToBoard(divReview, task1, story, '#84f0ca');
 
                 else if ("divdone" === task1.status)
-                    fillTaskToBoard(divDone, task1, 'green)');
+                    fillTaskToBoard(divDone, task1, story,'green)');
             })
         }
 
