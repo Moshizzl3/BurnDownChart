@@ -76,7 +76,7 @@ async function updateStatusTask(task) {
 }
 
 async function updateTaskStatus(task, input) {
-    if (input === 'done') {
+    if (input === 'divdone') {
         task.completionDate = new Date().toLocaleDateString('en-CA');
     }
     task.status = input;
